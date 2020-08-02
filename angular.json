@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "exam-manager-client"
+    }
+  },
+  "defaultProject": "exam-manager-client",
+  "cli": {
+    "analytics": "481d4b15-2ad6-4d64-805a-e3e41ed1895e"
+  }
 }
