@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-manage-participant',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageParticipantComponent implements OnInit {
 
-  constructor() { }
+  constructor(private titleService : Title) {
+    this.setTitle('Manage Participant')
+  }
+
+  private setTitle(newTitle : string) {
+    this.titleService.setTitle(newTitle)
+  }
 
   ngOnInit(): void {
+
   }
 
 }
