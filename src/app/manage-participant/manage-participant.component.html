@@ -1,1 +1,59 @@
-<p>manage-participant works!</p>
+<form action="" method="post">
+
+    <div>
+        <label for="participantName">
+            Participant Name
+        </label>
+        <input type="text" placeholder="ex: John Lennon" (input)="setParticipantName($event)">
+    </div>
+    
+    <div>
+        <label for="participantEmail">Participant Email</label>
+        <input type="email" placeholder="ex: John@something.com" (input)="setParticipantEmail($event)">
+    </div>
+    
+    <div>
+        <label for="participantPassword">Participant Password</label>
+        <input type="password" (input)="setParticipantPassword($event)">
+    </div>
+
+    <input type="button" value="Submit" (click)="insertParticipant()">
+
+</form>
+
+
+<h1>Participants</h1>
+<div *ngFor="let participant of participants">
+        
+    <div *ngIf="!participant.isEdit">
+        <h3>{{participant.name}}</h3>
+        <div>{{participant.email}}</div>
+    </div>
+
+    <div *ngIf="participant.isEdit">
+        <div>
+            <label for="participantName">
+                Participant Name
+            </label>
+            <input type="text" (input)="setParticipantName($event)" [value]="participant.name" > 
+        </div>
+        <div>
+            <label for="participantEmail">
+                Participant Email
+            </label>
+            <input type="email" (input)="setParticipantEmail($event)" [value]="participant.email">
+        </div>
+        <div>
+            <label for="participantPassword">
+                Participant Password
+            </label>
+            <input type="password" (input)="setParticipantPassword($event)" [value]="participant.password">
+        </div>
+    </div>
+
+    <button (click)="participant.isEdit = !participant.isEdit;" >{{participant.isEdit ? 'Cancel' : 'Edit'}}</button>
+    <button (click)="participant.isDelete = !participant.isDelete;" >{{participant.isDelete ? 'Cancel' : 'Delete'}}</button>
+
+
+
+</div>
