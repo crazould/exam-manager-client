@@ -31,5 +31,8 @@ export class ParticipantService {
     return this.http.post<Participant>(this.participantsUrl, participant, this.httpOptions)
   }
   
+  updateParticipant(participant: Participant): Observable<any> {
+    return this.http.put(this.participantsUrl, participant, this.httpOptions)
+  }
 
 }
