@@ -13,17 +13,23 @@ import { environment } from '../../environments/environment';
 })
 export class ParticipantService {
 
-  private apiUrl = environment.apiUrl
-  private participantsUrl = '/user'
+  private participantsUrl = environment.apiUrl + '/user'
+
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  }
 
   constructor(
     private http: HttpClient
   ) {}
 
   getParticipants(): Observable<Participant[]> {
-    return this.http.get<Participant[]>(`${this.apiUrl}${this.participantsUrl}`)
+    return this.http.get<Participant[]>(this.participantsUrl, )
   }
 
+  addParticipant(participant: Participant): Observable<Participant> {
+    return this.http.post<Participant>(this.participantsUrl, participant, this.httpOptions)
+  }
   
 
 }
