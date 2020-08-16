@@ -1,0 +1,88 @@
+<form action="" method="post">
+    <h1>
+        Create Participant
+    </h1>
+    <div>
+        <label for="participantName">
+            Name
+        </label>
+        <input type="text" placeholder="ex: John Lennon" (input)="setParticipantName($event)">
+    </div>
+    
+    <div>
+        <label for="participantEmail">
+            Email
+        </label>
+        <input type="email" placeholder="ex: John@something.com" (input)="setParticipantEmail($event)">
+    </div>
+    
+    <div>
+        <label for="participantPassword">
+            Password
+        </label>
+        <input type="password" (input)="setParticipantPassword($event)">
+    </div>
+
+    <input type="button" value="Submit" (click)="insertParticipant()">
+
+</form>
+
+
+<h1>Participants</h1>
+<div *ngFor="let participant of participants">
+        
+    <div *ngIf="!participant.isEdit">
+        <h3>{{participant.name}}</h3>
+        <div>{{participant.email}}</div>
+    </div>
+
+    <div *ngIf="participant.isEdit">
+        <div>
+            <label for="participantName">
+                Name
+            </label>
+            <input type="text" [value]="participant.name" (input)="setEditParticipantName($event)"> 
+        </div>
+        <div>
+            <label for="participantEmail">
+                Email
+            </label>
+            <input type="email" [value]="participant.email" (input)="setEditParticipantEmail($event)">
+        </div>
+        <div>
+            <label for="participantPassword">
+                Password
+            </label>
+            <input type="password" [value]="participant.password" (input)="setEditParticipantPassword($event)">
+        </div>
+    </div>
+
+    <div *ngIf="!participant.isEdit && !participant.isDelete">
+        <button (click)="participant.isEdit = !participant.isEdit;" >
+            Edit
+        </button>
+        <button (click)="participant.isDelete = !participant.isDelete;" >
+            Delete
+        </button>
+    </div>
+
+    <div *ngIf="participant.isEdit">
+        <button (click)="updateParticipant(participant.id)">
+            Save
+        </button>
+        <button (click)="participant.isEdit = !participant.isEdit;" >
+            Cancel
+        </button>
+    </div>
+
+    <div *ngIf="participant.isDelete">
+        <p>Are you sure ?</p>
+        <button (click)="deleteParticipant(participant.id)">
+            Yes
+        </button>
+        <button (click)="participant.isDelete = !participant.isDelete;" >
+            No
+        </button>
+    </div>
+
+</div>
