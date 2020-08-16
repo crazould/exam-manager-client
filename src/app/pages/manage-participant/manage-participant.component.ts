@@ -67,20 +67,35 @@ export class ManageParticipantComponent implements OnInit {
 
   add(): void {
 
+    this.participantService.addParticipant({
+      name: this.participantName,
+      email: this.participantEmail,
+      password: this.participantPassword
+    } as Participant).subscribe( () => {
+      this.participants.push(new Participant(
+        this.participantName,
+        this.participantEmail,
+        this.participantPassword
+      ))
+    })
+
   }
 
   insertParticipant() {
-    let lenght = this.participants.length
-    let participant = new Participant(
-      this.participantName,
-      this.participantEmail,
-      this.participantPassword
-    )
+    // let lenght = this.participants.length
+    // let participant = new Participant(
+    //   this.participantName,
+    //   this.participantEmail,
+    //   this.participantPassword
+    // )
 
-    participant.id = (lenght + 1) + ''
-    this.participants.push(
-        participant
-    )
+    // participant.id = (lenght + 1) + ''
+    // this.participants.push(
+    //     participant
+    // )
+
+
+
   }
 
   updateParticipant(id) {
