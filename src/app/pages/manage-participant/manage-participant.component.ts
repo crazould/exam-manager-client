@@ -4,6 +4,7 @@ import { Participant } from '../../models/participant.model'
 import { ParticipantService } from '../../services/participant.service'
 
 
+
 @Component({
   selector: 'app-manage-participant',
   templateUrl: './manage-participant.component.html',
@@ -81,24 +82,7 @@ export class ManageParticipantComponent implements OnInit {
 
   }
 
-  insertParticipant() {
-    // let lenght = this.participants.length
-    // let participant = new Participant(
-    //   this.participantName,
-    //   this.participantEmail,
-    //   this.participantPassword
-    // )
-
-    // participant.id = (lenght + 1) + ''
-    // this.participants.push(
-    //     participant
-    // )
-
-
-
-  }
-
-  updateParticipant(id) {
+  save(id: number): void{
 
     let oldParticipant = this.participants.find(p => p.id == id)
 
@@ -107,12 +91,20 @@ export class ManageParticipantComponent implements OnInit {
       this.editParticipantEmail == undefined ? oldParticipant.email : this.editParticipantEmail,
       this.editParticipantPassword  == undefined ? oldParticipant.password : this.editParticipantPassword
     )
-
-    this.participants.splice(--id, 1, p)
+    p.id = id
+    this.participantService.updateParticipant(p)
+    .subscribe(() => {
+      this.participants.splice(--id, 1, p)
+    })
   }
 
-  deleteParticipant(id) {
+  delete(id) {
+
+    let oldParticipant = this.participants.find(p => p.id == id)
+    this.participantService.deleteParticipant(oldParticipant)
     this.participants.splice(--id, 1)
+    console.log(this.participants)
+
   }
 
 }

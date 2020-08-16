@@ -67,7 +67,7 @@
     </div>
 
     <div *ngIf="participant.isEdit">
-        <button (click)="updateParticipant(participant.id)">
+        <button (click)="save(participant.id)">
             Save
         </button>
         <button (click)="participant.isEdit = !participant.isEdit;" >
@@ -77,7 +77,7 @@
 
     <div *ngIf="participant.isDelete">
         <p>Are you sure ?</p>
-        <button (click)="deleteParticipant(participant.id)">
+        <button (click)="delete(participant.id)">
             Yes
         </button>
         <button (click)="participant.isDelete = !participant.isDelete;" >
