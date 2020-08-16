@@ -32,7 +32,15 @@ export class ParticipantService {
   }
   
   updateParticipant(participant: Participant): Observable<any> {
+    
     return this.http.put(this.participantsUrl, participant, this.httpOptions)
+  }
+
+  deleteParticipant(participant: Participant): Observable<Participant> {
+    let id = typeof participant === 'number' ? participant : participant.id
+    let url = `${this.participantsUrl}/${id}`
+
+    return this.http.delete<Participant>(url, this.httpOptions)
   }
 
 }
