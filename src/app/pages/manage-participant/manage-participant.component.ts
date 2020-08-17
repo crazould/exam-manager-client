@@ -72,37 +72,41 @@ export class ManageParticipantComponent implements OnInit {
       name: this.participantName,
       email: this.participantEmail,
       password: this.participantPassword
-    } as Participant).subscribe( () => {
-      this.participants.push(new Participant(
-        this.participantName,
-        this.participantEmail,
-        this.participantPassword
-      ))
+    } as Participant).subscribe( (p) => {
+      this.participants.push(p)
     })
 
   }
 
-  save(id: number): void{
+  save(id: number): void {
 
     let oldParticipant = this.participants.find(p => p.id == id)
+    let index = this.participants.findIndex(e => e.id == id)
 
     let p = new Participant(
       this.editParticipantName  == undefined ? oldParticipant.name : this.editParticipantName,
       this.editParticipantEmail == undefined ? oldParticipant.email : this.editParticipantEmail,
       this.editParticipantPassword  == undefined ? oldParticipant.password : this.editParticipantPassword
     )
+
     p.id = id
+    
+    console.log(p)
+
     this.participantService.updateParticipant(p)
     .subscribe(() => {
-      this.participants.splice(--id, 1, p)
+      this.participants.splice(index, 1, p)
     })
+
   }
 
-  delete(id) {
+  delete(id: number): void {
 
-    let oldParticipant = this.participants.find(p => p.id == id)
-    this.participantService.deleteParticipant(oldParticipant)
-    this.participants.splice(--id, 1)
+    let index = this.participants.findIndex(e => e.id == id)
+    this.participantService.deleteParticipant(id)
+    .subscribe(() => {
+      this.participants.splice(index, 1)
+    })
     console.log(this.participants)
 
   }
