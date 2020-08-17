@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 })
 export class ParticipantService {
 
-  private participantsUrl = environment.apiUrl + '/user'
+  private participantsUrl = environment.apiUrl + '/participant'
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
