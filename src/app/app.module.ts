@@ -8,6 +8,11 @@ import { ManageParticipantComponent } from './pages/manage-participant/manage-pa
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ManageQuestionComponent } from './pages/manage-question/manage-question.component';
+import { ManageScheduleComponent } from './pages/manage-schedule/manage-schedule.component';
+import { TestResultComponent } from './pages/test-result/test-result.component';
+import { TestStatusComponent } from './pages/test-status/test-status.component';
+import { TestActivityComponent } from './pages/test-activity/test-activity.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +20,12 @@ import { FooterComponent } from './components/footer/footer.component';
     ManageParticipantComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ManageQuestionComponent,
+    ManageScheduleComponent,
+    TestResultComponent,
+    TestStatusComponent,
+    TestActivityComponent
   ],
   imports: [
     BrowserModule,
