@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Participant } from '../models/participant.model'
 import { environment } from '../../environments/environment';
-
 
 @Injectable({
   providedIn: 'root'
@@ -31,17 +29,12 @@ export class ParticipantService {
     return this.http.post<Participant>(this.participantsUrl, participant, this.httpOptions)
   }
   
-  updateParticipant(participant: Participant): Observable<{}> {
-
-    let id = typeof participant === 'number' ? participant : participant.id
+  updateParticipant(id: number, participant: Participant): Observable<{}> {
     let url = `${this.participantsUrl}/${id}`
-    
     return this.http.put(url, participant, this.httpOptions)
-
   }
 
   deleteParticipant(id: number): Observable<Participant> {
-
     let url = `${this.participantsUrl}/${id}`
     return this.http.delete<Participant>(url, this.httpOptions)
   }

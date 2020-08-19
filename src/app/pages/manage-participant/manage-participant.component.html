@@ -6,34 +6,40 @@
         <label for="participantName">
             Name
         </label>
-        <input type="text" placeholder="ex: John Lennon" (input)="setParticipantName($event)">
+        <input type="text" placeholder="ex: John Lennon" #participantName />
     </div>
-    
+
     <div>
         <label for="participantEmail">
             Email
         </label>
-        <input type="email" placeholder="ex: John@something.com" (input)="setParticipantEmail($event)">
+        <input type="email" placeholder="ex: John@something.com" #participantEmail />
     </div>
-    
+
     <div>
         <label for="participantPassword">
             Password
         </label>
-        <input type="password" (input)="setParticipantPassword($event)">
+        <input type="password" #participantPassword />
     </div>
 
-    <input type="button" value="Submit" (click)="add()">
-
+    <input type="button" value="Submit" (click)="
+      add(
+        participantName.value,
+        participantEmail.value,
+        participantPassword.value
+      );
+      participantName.value = '';
+      participantEmail.value = '';
+      participantPassword.value = ''
+    " />
 </form>
-
 
 <h1>Participants</h1>
 <div *ngFor="let participant of participants">
-        
     <div *ngIf="!participant.isEdit">
-        <h3>{{participant.name}}</h3>
-        <div>{{participant.email}}</div>
+        <h3>{{ participant.name }}</h3>
+        <div>{{ participant.email }}</div>
     </div>
 
     <div *ngIf="participant.isEdit">
@@ -41,37 +47,51 @@
             <label for="participantName">
                 Name
             </label>
-            <input type="text" [value]="participant.name" (input)="setEditParticipantName($event)"> 
+            <input 
+                type="text" 
+                [value]="participant.name" 
+                (input)="editParticipantName.value = $event.target.value;" 
+                #editParticipantName />
         </div>
         <div>
             <label for="participantEmail">
                 Email
             </label>
-            <input type="email" [value]="participant.email" (input)="setEditParticipantEmail($event)">
+            <input 
+                type="email" 
+                [value]="participant.email" 
+                (input)="editParticipantEmail.value = $event.target.value;"
+                #editParticipantEmail />
         </div>
         <div>
             <label for="participantPassword">
                 Password
             </label>
-            <input type="password" [value]="participant.password" (input)="setEditParticipantPassword($event)">
+            <input 
+                type="password" 
+                [value]="participant.password" 
+                (input)="editParticipantPassword.value = $event.target.value;" 
+                #editParticipantPassword/>
         </div>
+        <button (click)="
+            save(
+                participant.id, 
+                editParticipantName.value, 
+                editParticipantEmail.value, 
+                editParticipantPassword.value)">
+            Save
+        </button>
+        <button (click)="participant.isEdit = !participant.isEdit">
+            Cancel
+        </button>
     </div>
 
     <div *ngIf="!participant.isEdit && !participant.isDelete">
-        <button (click)="participant.isEdit = !participant.isEdit;" >
+        <button (click)="participant.isEdit = !participant.isEdit">
             Edit
         </button>
-        <button (click)="participant.isDelete = !participant.isDelete;" >
+        <button (click)="participant.isDelete = !participant.isDelete">
             Delete
-        </button>
-    </div>
-
-    <div *ngIf="participant.isEdit">
-        <button (click)="save(participant.id)">
-            Save
-        </button>
-        <button (click)="participant.isEdit = !participant.isEdit;" >
-            Cancel
         </button>
     </div>
 
@@ -80,7 +100,7 @@
         <button (click)="delete(participant.id)">
             Yes
         </button>
-        <button (click)="participant.isDelete = !participant.isDelete;" >
+        <button (click)="participant.isDelete = !participant.isDelete">
             No
         </button>
     </div>
