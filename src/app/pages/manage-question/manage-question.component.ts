@@ -11,7 +11,9 @@ export class ManageQuestionComponent implements OnInit {
 
   constructor(
     private titleService: Title
-  ) { this.setTitle("Manage Question") }
+  ) { 
+    this.setTitle("Manage Question")
+  }
 
   ngOnInit(): void {
 
