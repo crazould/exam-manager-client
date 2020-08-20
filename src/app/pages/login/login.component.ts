@@ -10,14 +10,15 @@ import { Title } from '@angular/platform-browser';
 export class LoginComponent implements OnInit {
 
   constructor(private titleService : Title) {
-    this.setTitle('Manage Participant')
+    this.setTitle("Login")
+  }
+  
+  ngOnInit(): void {
+    
   }
 
   private setTitle(newTitle : string) {
     this.titleService.setTitle(newTitle)
-  }
-  ngOnInit(): void {
-
   }
 
 }
