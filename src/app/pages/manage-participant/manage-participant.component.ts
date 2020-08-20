@@ -16,7 +16,7 @@ export class ManageParticipantComponent implements OnInit {
     private titleService: Title,
     private participantService: ParticipantService
   ) {
-    this.setTitle('Manage Participant');
+    this.setTitle("Manage Participant");
   }
 
   ngOnInit(): void {
