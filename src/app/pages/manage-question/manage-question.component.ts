@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-manage-question',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageQuestionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private titleService: Title
+  ) { this.setTitle("Manage Question") }
 
   ngOnInit(): void {
+
+  }
+
+  setTitle(pageTitle: string): void {
+    this.titleService.setTitle(pageTitle)
   }
 
 }
