@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ParticipantService } from 'src/app/services/participant.service';
+import { ParticipantService } from 'src/app/services/participant/participant.service';
 import { Participant } from 'src/app/models/participant/participant.model';
 import { ConstantPool } from '@angular/compiler';
 
@@ -66,15 +66,18 @@ export class ManageScheduleComponent implements OnInit {
     activatedBtn.classList.remove('active');
   }
 
-  add(): void{
+  add(testName: string, startTime: string, endTime: string): void{
+
 
   }
 
   edit(): void{
 
+
   }
 
   delete(): void{
+
 
   }
 

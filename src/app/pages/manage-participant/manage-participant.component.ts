@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Participant } from '../../models/participant/participant.model';
-import { ParticipantService } from '../../services/participant.service';
+import { ParticipantService } from '../../services/participant/participant.service';
 
 @Component({
   selector: 'app-manage-participant',
