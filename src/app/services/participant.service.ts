@@ -29,9 +29,9 @@ export class ParticipantService {
     return this.http.post<Participant>(this.participantsUrl, participant, this.httpOptions)
   }
   
-  updateParticipant(id: number, participant: Participant): Observable<{}> {
+  updateParticipant(id: number, participant: Participant): Observable<Participant> {
     let url = `${this.participantsUrl}/${id}`
-    return this.http.put(url, participant, this.httpOptions)
+    return this.http.put<Participant>(url, participant, this.httpOptions)
   }
 
   deleteParticipant(id: number): Observable<Participant> {
