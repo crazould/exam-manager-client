@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Participant } from '../models/participant.model'
+import { Participant } from '../models/participant/participant.model'
 import { environment } from '../../environments/environment';
 
 @Injectable({

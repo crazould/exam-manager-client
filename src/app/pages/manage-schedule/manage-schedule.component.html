@@ -1,1 +1,35 @@
-<p>manage-schedule works!</p>
+<div>
+    
+    <label for="testName">
+        Test Name
+    </label>
+    <input #testName type="text">
+
+    <label for="startTime">
+        Start time
+    </label>
+    <input #startTime type="datetime-local">
+
+    <label for="endTime">
+        end time
+    </label>
+    <input #endTime type="datetime-local">
+
+        
+    <div class="checkbox-container">
+        <div *ngFor="let participant of participants">
+            <button for="participantName" (click)="setParticipantSchedule(participant.id, $event.target)" >
+                {{participant.name}}
+            </button>
+        </div>
+    </div>
+
+    <button>
+        submit
+    </button>
+
+</div>
+<div>
+
+
+</div>

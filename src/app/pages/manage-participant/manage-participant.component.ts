@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Participant } from '../../models/participant.model';
+import { Participant } from '../../models/participant/participant.model';
 import { ParticipantService } from '../../services/participant.service';
 
 @Component({

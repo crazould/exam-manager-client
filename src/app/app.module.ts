@@ -25,7 +25,7 @@ import { TestActivityComponent } from './pages/test-activity/test-activity.compo
     ManageScheduleComponent,
     TestResultComponent,
     TestStatusComponent,
-    TestActivityComponent
+    TestActivityComponent,
   ],
   imports: [
     BrowserModule,
