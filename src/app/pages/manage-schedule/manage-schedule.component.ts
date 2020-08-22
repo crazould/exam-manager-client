@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ParticipantService } from 'src/app/services/participant/participant.service';
+import { TestService } from 'src/app/services/test/test.service';
+import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { Participant } from 'src/app/models/participant/participant.model';
-import { ConstantPool } from '@angular/compiler';
+import { Test } from 'src/app/models/test/test.model';
+import { Schedule } from 'src/app/models/schedule/schedule.model';
 
 @Component({
   selector: 'app-manage-schedule',
@@ -15,7 +18,9 @@ export class ManageScheduleComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private participantService: ParticipantService
+    private participantService: ParticipantService,
+    private testSerivce: TestService,
+    private scheduleSerivce: ScheduleService,
   ) {
     this.setTitle('Manage Schedule');
   }
@@ -67,7 +72,7 @@ export class ManageScheduleComponent implements OnInit {
   }
 
   add(testName: string, startTime: string, endTime: string): void{
-    
+
 
   }
 
