@@ -67,7 +67,7 @@ export class ManageScheduleComponent implements OnInit {
   }
 
   add(testName: string, startTime: string, endTime: string): void{
-
+    
 
   }
 
