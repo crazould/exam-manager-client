@@ -19,8 +19,8 @@ export class TestService {
     private http: HttpClient
   ) { }
 
-  getTestHeaders() {
-    return this.http.get(this.teshHeaderURL)
+  getTestHeaders(): Observable<Test[]> {
+    return this.http.get<Test[]>(this.teshHeaderURL)
   }
 
   addTestHeaders(test: Test): Observable<Test>{
