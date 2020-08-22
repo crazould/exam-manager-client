@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Test } from 'src/app/models/test/test.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,13 @@ export class TestService {
     private http: HttpClient
   ) { }
 
-  getTestHeaders
+  getTestHeaders() {
+    return this.http.get(this.teshHeaderURL)
+  }
+
+  addTestHeaders(test: Test): Observable<Test>{
+    return this.http.post<Test>(this.teshHeaderURL, test, this.httpOptions)
+  }
 
 
 }
