@@ -6,26 +6,37 @@ import { Schedule } from 'src/app/models/schedule/schedule.model';
 import { Test } from 'src/app/models/test/test.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScheduleService {
+  private scheduleUrl: string = environment.apiUrl + '/schedule';
 
-  private scheduleHeaderUrl: string = environment.apiUrl + '/schedule-header'
   private httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  constructor(private http: HttpClient) {}
+
+  getSchedules(): Observable<Schedule[]> {
+    return this.http.get<Schedule[]>(this.scheduleUrl);
   }
 
-  constructor(
-    private http: HttpClient
-  ) { }
-
-  getScheduleHeaders(): Observable<Schedule[]>{
-    return this.http.get<Schedule[]>(this.scheduleHeaderUrl)
+  addSchedule(schedule: Schedule): Observable<Schedule> {
+    return this.http.post<Schedule>(
+      this.scheduleUrl,
+      schedule,
+      this.httpOptions
+    );
   }
 
-  addScheduleHeader(schedule: Schedule){
-    return this.http.post<Schedule>(this.scheduleHeaderUrl, schedule, this.httpOptions)
+  updateSchedule(){
+    
   }
 
+  deleteSchedule(id: number): Observable<Schedule> {
+    let url = `${this.scheduleUrl}/${id}`
+    return this.http.delete<Schedule>(url, this.httpOptions)
+  }
 
+  
 }

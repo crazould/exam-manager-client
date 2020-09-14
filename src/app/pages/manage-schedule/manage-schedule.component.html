@@ -18,7 +18,7 @@
         
     <div class="checkbox-container">
         <div *ngFor="let participant of participants">
-            <button for="participantName" (click)="setParticipantSchedule(participant.id, $event.target)" >
+            <button for="participantName" (click)="setParticipantSchedule(participant, $event.target)" >
                 {{participant.name}}
             </button>
         </div>
@@ -28,8 +28,96 @@
         submit
     </button>
 
+    <h1>Schedules</h1>
+    <div *ngFor="let schedule of schedules">
+        
+        <div *ngIf="!schedule.isEdit">
+            <h3>
+                {{schedule.name}}
+            </h3>
+            <div>
+                <label for="startTime">
+                    Start time:
+                </label>
+                {{schedule.start_time}}
+            </div>
+            <div>
+                <label for="endTime">
+                    End time: 
+                </label>
+                {{schedule.end_time}}
+            </div>
+        </div>
+
+        <div *ngIf="schedule.isEdit">
+
+            <div>
+
+                <label for="testName">
+                    Test Name
+                </label>
+                <input 
+                    type="text" 
+                    [value]="schedule.name"
+                    (input)="editScheduleName.value = $event.target.value;" 
+                    #editScheduleName />
+                
+            </div>
+            <div>
+
+                <label for="startTime">
+                Start time
+            </label>
+            <input 
+                type="datetime-local"
+                [value]="schedule.start_time"
+                (input)="editStartTime.value = $event.target.value;"    
+                #editStartTime />
+        
+            </div>
+            <div>
+
+                <label for="endTime">
+                End time
+            </label>
+            <input 
+                type="datetime-local"
+                [value]="schedule.end_time"
+                (input)="editEndTime.value = $event.target.value"    
+                #editEndTime />
+            </div>
+
+            <button (click)="
+                save(
+                    schedule.id)">
+                Save
+            </button>
+            <button (click)="schedule.isEdit = !schedule.isEdit">
+                Cancel
+            </button>
+        </div>
+     
+        <div *ngIf="!schedule.isEdit && !schedule.isDelete">
+            <button (click)="schedule.isEdit = !schedule.isEdit">
+                Edit
+            </button>
+            <button (click)="schedule.isDelete = !schedule.isDelete">
+                Delete
+            </button>
+        </div>
+    
+        <div *ngIf="schedule.isDelete">
+            <p>Are you sure ?</p>
+            <button (click)="delete(schedule.id)">
+                Yes
+            </button>
+            <button (click)="schedule.isDelete = !schedule.isDelete">
+                No
+            </button>
+        </div>
+
+    </div>
+
 </div>
 <div>
-
-
 </div>
