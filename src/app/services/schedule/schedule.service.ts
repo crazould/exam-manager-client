@@ -10,6 +10,8 @@ import { Test } from 'src/app/models/test/test.model';
 })
 export class ScheduleService {
   private scheduleUrl: string = environment.apiUrl + '/schedule';
+  private scheduleHeaderUrl: string = environment.apiUrl + '/schedule-header';
+  private schedulDetaileUrl: string = environment.apiUrl + '/schedule-detail';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

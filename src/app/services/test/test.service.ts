@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class TestService {
 
-  private teshHeaderURL: string = environment.apiUrl + "/test-header"
+  private testHeaderURL: string = environment.apiUrl + "/test-header"
+  private teshURL: string = environment.apiUrl + "/test"
 
   private httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -20,11 +21,11 @@ export class TestService {
   ) { }
 
   getTestHeaders(): Observable<Test[]> {
-    return this.http.get<Test[]>(this.teshHeaderURL)
+    return this.http.get<Test[]>(this.testHeaderURL)
   }
 
   addTestHeaders(test: Test): Observable<Test>{
-    return this.http.post<Test>(this.teshHeaderURL, test, this.httpOptions)
+    return this.http.post<Test>(this.testHeaderURL, test, this.httpOptions)
   }
 
 
