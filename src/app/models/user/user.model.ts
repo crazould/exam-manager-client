@@ -1,14 +1,14 @@
 export class User {
  
     id: number
-    name: string
+    username: string
     email: string
     password: string
     isEdit: boolean
     isDelete: boolean
 
     constructor(name: string, email: string, password: string) {
-        this.name = name,
+        this.username = name,
         this.email = email,
         this.password = password,
         this.isEdit = false,

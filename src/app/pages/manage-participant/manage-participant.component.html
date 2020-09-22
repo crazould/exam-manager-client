@@ -38,7 +38,7 @@
 <h1>Participants</h1>
 <div *ngFor="let participant of participants">
     <div *ngIf="!participant.isEdit">
-        <h3>{{ participant.name }}</h3>
+        <h3>{{ participant.username }}</h3>
         <div>{{ participant.email }}</div>
     </div>
 
@@ -49,7 +49,7 @@
             </label>
             <input 
                 type="text" 
-                [value]="participant.name" 
+                [value]="participant.username" 
                 (input)="editParticipantName.value = $event.target.value;" 
                 #editParticipantName />
         </div>

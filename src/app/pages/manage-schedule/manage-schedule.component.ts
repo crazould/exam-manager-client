@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ParticipantService } from 'src/app/services/participant/participant.service';
-import { TestService } from 'src/app/services/test/test.service';
+
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { Participant } from 'src/app/models/participant/participant.model';
-import { Test } from 'src/app/models/test/test.model';
 import { Schedule } from 'src/app/models/schedule/schedule.model';
+
 
 @Component({
   selector: 'app-manage-schedule',
@@ -13,7 +13,7 @@ import { Schedule } from 'src/app/models/schedule/schedule.model';
   styleUrls: ['./manage-schedule.component.sass'],
 })
 export class ManageScheduleComponent implements OnInit {
-  
+
   participants: Participant[] = [];
   schedules: Schedule[] = [];
   selectedParticipants: Participant[] = [];
@@ -21,7 +21,6 @@ export class ManageScheduleComponent implements OnInit {
   constructor(
     private titleService: Title,
     private participantService: ParticipantService,
-    private testSerivce: TestService,
     private scheduleSerivce: ScheduleService
   ) {
     this.setTitle('Manage Schedule');
@@ -46,17 +45,17 @@ export class ManageScheduleComponent implements OnInit {
     this.scheduleSerivce.getSchedules().subscribe((schedules) => {
 
       this.schedules = schedules;
-      console.log(this.schedules);
 
       this.schedules.map(r => {
-        console.log(r)
-        r.start_time = new Date(r.start_time)
-        r.end_time = new Date(r.end_time)
-        
-        // console.log(new Date(r.start_time).getFullYear())
+        r.startTime = new Date(new Date(r.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+        r.endTime = new Date(new Date(r.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
       })
-      
+
+      console.log(this.schedules)
+
     });
+
+
   }
 
   setParticipantSchedule(
@@ -92,31 +91,31 @@ export class ManageScheduleComponent implements OnInit {
   }
 
   add(testName: string, startTime: string, endTime: string): void {
-    let test: Test = new Test(testName);
-    let startTimeDate  = new Date(startTime)
-    let endTimeDate  = new Date(endTime)
+    
+    let startTimeDate = new Date(new Date(startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+    let endTimeDate = new Date(new Date(endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
 
 
-    this.testSerivce.addTestHeaders(test).subscribe((test) => {
       let schedule: Schedule = new Schedule(
-        test,
+        testName,
         startTimeDate,
         endTimeDate,
         this.selectedParticipants
-      );
-      console.log(schedule.participants.length)
+      )
+
       this.scheduleSerivce.addSchedule(schedule).subscribe((e) => {
-        console.log(e)
-      } );
-    });
+        this.schedules.push(schedule)
+      })
+
+
   }
 
   edit(id: number): void {
 
   }
 
-  save(id: number): void{
-
+  save(id: number): void {
+    console.log(id)
   }
 
   delete(id: number): void {

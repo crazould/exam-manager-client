@@ -1,25 +1,31 @@
 <div>
     
-    <label for="testName">
-        Test Name
-    </label>
+    <div>
+        <label for="testName">
+            Test Name
+        </label>
     <input #testName type="text">
-
-    <label for="startTime">
-        Start time
-    </label>
+    </div>
+    
+    <div>
+        <label for="startTime">
+            Start time
+        </label>
     <input #startTime type="datetime-local">
-
-    <label for="endTime">
-        end time
-    </label>
+    </div>
+    
+    <div>
+        <label for="endTime">
+            end time
+        </label>
     <input #endTime type="datetime-local">
-
+    </div>
+    
         
     <div class="checkbox-container">
         <div *ngFor="let participant of participants">
             <button for="participantName" (click)="setParticipantSchedule(participant, $event.target)" >
-                {{participant.name}}
+                {{participant.username}}
             </button>
         </div>
     </div>
@@ -33,19 +39,19 @@
         
         <div *ngIf="!schedule.isEdit">
             <h3>
-                {{schedule.name}}
+                {{schedule.testName}}
             </h3>
             <div>
                 <label for="startTime">
                     Start time:
                 </label>
-                {{schedule.start_time}}
+                {{schedule.startTime}}
             </div>
             <div>
                 <label for="endTime">
                     End time: 
                 </label>
-                {{schedule.end_time}}
+                {{schedule.endTime}}
             </div>
         </div>
 
@@ -58,34 +64,34 @@
                 </label>
                 <input 
                     type="text" 
-                    [value]="schedule.name"
+                    [value]="schedule.testName"
                     (input)="editScheduleName.value = $event.target.value;" 
-                    #editScheduleName />
+                    #editTestName />
                 
             </div>
             <div>
 
                 <label for="startTime">
-                Start time
-            </label>
-            <input 
-                type="datetime-local"
-                [value]="schedule.start_time"
-                (input)="editStartTime.value = $event.target.value;"    
-                #editStartTime />
+                    Start time
+                </label>
+                <input 
+                    type="datetime-local"
+                    [value]="schedule.startTime"
+                    (input)="editStartTime.value = $event.target.value;"    
+                    #editStartTime />
         
             </div>
             <div>
 
                 <label for="endTime">
-                End time
-            </label>
-            <input 
-                type="datetime-local"
-                [value]="schedule.end_time"
-                (input)="editEndTime.value = $event.target.value"    
-                #editEndTime />
-            </div>
+                    End time
+                </label>
+                <input 
+                    type="datetime-local"
+                    [value]="schedule.endTime"
+                    (input)="editEndTime.value = $event.target.value"    
+                    #editEndTime />
+                </div>
 
             <button (click)="
                 save(

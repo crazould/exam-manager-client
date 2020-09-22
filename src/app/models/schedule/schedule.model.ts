@@ -1,25 +1,24 @@
-import { Test } from '../test/test.model';
 import { Participant } from '../participant/participant.model';
 
 export class Schedule {
   id: number;
-  test: Test;
-  start_time: Date;
-  end_time: Date;
+  testName: string;
+  startTime: string;
+  endTime: string;
 
   participants: Participant[];
   totalParticipants: number;
-  status: string;
+  answerStatus: string[];
 
   constructor(
-    test: Test,
-    start_time: Date,
-    end_time: Date,
+    testName: string,
+    startTime: string,
+    endTime: string,
     participants: Participant[]
   ) {
-    this.test = test;
-    this.start_time = start_time;
-    this.end_time = end_time;
+    this.testName = testName;
+    this.startTime = startTime;
+    this.endTime = endTime;
     this.participants = participants;
     this.totalParticipants = this.participants.length
   }
