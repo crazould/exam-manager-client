@@ -3,8 +3,13 @@ import { Title } from '@angular/platform-browser';
 import { ParticipantService } from 'src/app/services/participant/participant.service';
 
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
+import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule-header.service';
+import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule-detail.service';
+
 import { Participant } from 'src/app/models/participant/participant.model';
 import { Schedule } from 'src/app/models/schedule/schedule.model';
+import { ScheduleHeader } from 'src/app/models/schedule-header/schedule-header.model';
+import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.model';
 
 
 @Component({
@@ -16,12 +21,18 @@ export class ManageScheduleComponent implements OnInit {
 
   participants: Participant[] = [];
   schedules: Schedule[] = [];
+
+  scheduleHeaders: ScheduleHeader[] = [];
+  scheduleDetails: ScheduleDetail[] = [];
+
   selectedParticipants: Participant[] = [];
 
   constructor(
     private titleService: Title,
     private participantService: ParticipantService,
-    private scheduleSerivce: ScheduleService
+    private scheduleSerivce: ScheduleService,
+    private scheduleHeaderService: ScheduleHeaderService,
+    private scheduleDetailService: ScheduleDetailService
   ) {
     this.setTitle('Manage Schedule');
   }
@@ -42,20 +53,22 @@ export class ManageScheduleComponent implements OnInit {
   }
 
   getSchedules(): void {
-    this.scheduleSerivce.getSchedules().subscribe((schedules) => {
 
-      this.schedules = schedules;
+    this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
+      this.scheduleDetailService.getScheduleDetails().subscribe((scheduleDetails) =>{
+        this.scheduleHeaders = scheduleHeaders;
+        this.scheduleDetails = scheduleDetails;
 
-      this.schedules.map(r => {
-        r.startTime = new Date(new Date(r.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
-        r.endTime = new Date(new Date(r.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+        this.scheduleHeaders.map(scheduleHeader => {
+          scheduleHeader.startTime = new Date(new Date(scheduleHeader.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+          scheduleHeader.endTime = new Date(new Date(scheduleHeader.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+        })
+  
+        console.log(this.scheduleHeaders)
+        console.log(this.scheduleDetails)
+
       })
-
-      console.log(this.schedules)
-
     });
-
-
   }
 
   setParticipantSchedule(
@@ -95,35 +108,67 @@ export class ManageScheduleComponent implements OnInit {
     let startTimeDate = new Date(new Date(startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
     let endTimeDate = new Date(new Date(endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
 
+      // let schedule: Schedule = new Schedule(
+      //   testName,
+      //   startTimeDate,
+      //   endTimeDate,
+      //   this.selectedParticipants
+      // )
 
-      let schedule: Schedule = new Schedule(
+      let scheduleHeader: ScheduleHeader = new ScheduleHeader(
         testName,
         startTimeDate,
         endTimeDate,
-        this.selectedParticipants
       )
 
-      this.scheduleSerivce.addSchedule(schedule).subscribe((e) => {
-        this.schedules.push(schedule)
+      this.scheduleHeaderService.addScheduleHeader(scheduleHeader).subscribe((scheduleHeader) => {
+        
+        console.log(scheduleHeader)
+        this.scheduleHeaders.push(scheduleHeader)
+
+        // add scheduleDetail
+
+        let scheduleDetail: ScheduleDetail = new ScheduleDetail(
+          scheduleHeader.id, 
+          this.selectedParticipants
+        )
+
+        this.scheduleDetailService.addScheduleDetail(scheduleDetail).subscribe((scheduleDetail) => {
+          console.log(scheduleDetail)
+          this.scheduleDetails.push(scheduleDetail)
+        })
+
+        // totalParticipant => array of selected userid
+        // get array of schedule detail
+        // push to client schedule detail
+
       })
 
 
   }
 
-  edit(id: number): void {
+  edit(schedule: Schedule): void {
+    
+    console.log(schedule)
+
 
   }
 
   save(id: number): void {
+
     console.log(id)
+
+
   }
 
   delete(id: number): void {
-    let index = this.schedules.findIndex((s) => s.id == id)
+    
+    let index = this.scheduleHeaders.findIndex((s) => s.id == id)
 
-    this.scheduleSerivce.deleteSchedule(id).subscribe(() => {
-      this.schedules.splice(index, 1);
+    this.scheduleHeaderService.deleteScheduleHeader(id).subscribe(() => {
+      this.scheduleHeaders.splice(index, 1);
     });
 
   }
+
 }

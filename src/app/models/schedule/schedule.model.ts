@@ -1,6 +1,7 @@
 import { Participant } from '../participant/participant.model';
 
 export class Schedule {
+  
   id: number;
   testName: string;
   startTime: string;

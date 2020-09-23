@@ -35,7 +35,7 @@
     </button>
 
     <h1>Schedules</h1>
-    <div *ngFor="let schedule of schedules">
+    <div *ngFor="let schedule of scheduleHeaders">
         
         <div *ngIf="!schedule.isEdit">
             <h3>
@@ -104,7 +104,7 @@
         </div>
      
         <div *ngIf="!schedule.isEdit && !schedule.isDelete">
-            <button (click)="schedule.isEdit = !schedule.isEdit">
+            <button (click)="schedule.isEdit = !schedule.isEdit; edit(schedule)">
                 Edit
             </button>
             <button (click)="schedule.isDelete = !schedule.isDelete">
