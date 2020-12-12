@@ -65,7 +65,7 @@
                 <input 
                     type="text" 
                     [value]="schedule.testName"
-                    (input)="editScheduleName.value = $event.target.value;" 
+                    (input)="editTestName.value = $event.target.value;" 
                     #editTestName />
                 
             </div>
@@ -73,7 +73,7 @@
 
                 <label for="startTime">
                     Start time
-                </label>
+                </label> 
                 <input 
                     type="datetime-local"
                     [value]="schedule.startTime"
@@ -94,8 +94,7 @@
                 </div>
 
             <button (click)="
-                save(
-                    schedule.id)">
+            schedule.isEdit = !schedule.isEdit; save(schedule.id, editTestName.value, editStartTime.value, editEndTime.value)">
                 Save
             </button>
             <button (click)="schedule.isEdit = !schedule.isEdit">
@@ -104,7 +103,7 @@
         </div>
      
         <div *ngIf="!schedule.isEdit && !schedule.isDelete">
-            <button (click)="schedule.isEdit = !schedule.isEdit; edit(schedule)">
+            <button (click)="schedule.isEdit = !schedule.isEdit;">
                 Edit
             </button>
             <button (click)="schedule.isDelete = !schedule.isDelete">

@@ -29,8 +29,10 @@ export class ScheduleHeaderService {
     );
   }
 
-  updateScheduleHeader(){
+  updateScheduleHeader(id: number, scheduleHeader: ScheduleHeader): Observable<ScheduleHeader> {
+    let url = `${this.scheduleHeaderUrl}/${id}}`
     
+    return this.http.put<ScheduleHeader>(url, scheduleHeader, this.httpOptions)
   }
 
   deleteScheduleHeader(id: number): Observable<ScheduleHeader> {

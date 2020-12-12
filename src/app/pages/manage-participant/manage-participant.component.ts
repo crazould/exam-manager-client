@@ -43,9 +43,9 @@ export class ManageParticipantComponent implements OnInit {
 
   save(id: number, name: any, email: any, password: any): void {
     let index = this.participants.findIndex((p) => p.id == id);
-    let newParticipant = new Participant(name, email, password);
+    let editParticipant = new Participant(name, email, password);
 
-    this.participantService.updateParticipant(id, newParticipant).subscribe((participant) => {
+    this.participantService.updateParticipant(id, editParticipant).subscribe((participant) => {
       this.participants.splice(index, 1, participant);
     });
 

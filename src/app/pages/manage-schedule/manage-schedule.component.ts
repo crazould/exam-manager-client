@@ -55,17 +55,17 @@ export class ManageScheduleComponent implements OnInit {
   getSchedules(): void {
 
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
+
       this.scheduleDetailService.getScheduleDetails().subscribe((scheduleDetails) =>{
         this.scheduleHeaders = scheduleHeaders;
         this.scheduleDetails = scheduleDetails;
-
         this.scheduleHeaders.map(scheduleHeader => {
           scheduleHeader.startTime = new Date(new Date(scheduleHeader.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
           scheduleHeader.endTime = new Date(new Date(scheduleHeader.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
         })
   
-        console.log(this.scheduleHeaders)
-        console.log(this.scheduleDetails)
+        // console.log(this.scheduleHeaders)
+        // console.log(this.scheduleDetails)
 
       })
     });
@@ -108,25 +108,18 @@ export class ManageScheduleComponent implements OnInit {
     let startTimeDate = new Date(new Date(startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
     let endTimeDate = new Date(new Date(endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
 
-      // let schedule: Schedule = new Schedule(
-      //   testName,
-      //   startTimeDate,
-      //   endTimeDate,
-      //   this.selectedParticipants
-      // )
 
-      let scheduleHeader: ScheduleHeader = new ScheduleHeader(
-        testName,
-        startTimeDate,
-        endTimeDate,
-      )
+      let scheduleHeader: ScheduleHeader =
+        new ScheduleHeader(
+          testName,
+          startTimeDate,
+          endTimeDate,
+        )
 
       this.scheduleHeaderService.addScheduleHeader(scheduleHeader).subscribe((scheduleHeader) => {
         
-        console.log(scheduleHeader)
+        // console.log(scheduleHeader)
         this.scheduleHeaders.push(scheduleHeader)
-
-        // add scheduleDetail
 
         let scheduleDetail: ScheduleDetail = new ScheduleDetail(
           scheduleHeader.id, 
@@ -138,37 +131,31 @@ export class ManageScheduleComponent implements OnInit {
           this.scheduleDetails.push(scheduleDetail)
         })
 
-        // totalParticipant => array of selected userid
-        // get array of schedule detail
-        // push to client schedule detail
-
       })
 
 
   }
 
-  edit(schedule: Schedule): void {
-    
-    console.log(schedule)
+  save(id: number, editTestName: string, editStartTime: string, editEndTime: string): void {
 
+    let index = this.scheduleHeaders.findIndex((p) => p.id = id)
+    let editScheduleHeader =  new ScheduleHeader(editTestName, editStartTime, editEndTime)
 
-  }
+    // console.log(editScheduleHeader)
+    // console.log(id)
 
-  save(id: number): void {
-
-    console.log(id)
-
+    this.scheduleHeaderService.updateScheduleHeader(id, editScheduleHeader).subscribe((scheduleHeader) => {
+      this.scheduleHeaders.splice(index, 1, scheduleHeader)
+    })
 
   }
 
   delete(id: number): void {
-    
     let index = this.scheduleHeaders.findIndex((s) => s.id == id)
 
     this.scheduleHeaderService.deleteScheduleHeader(id).subscribe(() => {
       this.scheduleHeaders.splice(index, 1);
     });
-
   }
 
 }
