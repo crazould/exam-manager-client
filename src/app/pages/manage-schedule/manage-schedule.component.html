@@ -91,7 +91,7 @@
                     [value]="schedule.endTime"
                     (input)="editEndTime.value = $event.target.value"    
                     #editEndTime />
-                </div>
+            </div>
 
             <button (click)="
             schedule.isEdit = !schedule.isEdit; save(schedule.id, editTestName.value, editStartTime.value, editEndTime.value)">

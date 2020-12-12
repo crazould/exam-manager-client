@@ -6,6 +6,7 @@ export class ScheduleDetail {
 
     totalParticipants: number;
     participants: Participant[];
+    answerStatus: string;
 
     constructor(
         scheduleID: number,
@@ -14,5 +15,7 @@ export class ScheduleDetail {
         this.scheduleID = scheduleID
         this.participants = participants;
         this.totalParticipants = this.participants.length
+        this.answerStatus = 'not done';
+
     }
 }

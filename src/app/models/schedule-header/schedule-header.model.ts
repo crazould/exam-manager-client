@@ -5,7 +5,6 @@ export class ScheduleHeader {
     startTime: string;
     endTime: string;
     totalParticipants: number;
-    answerStatus: string;
 
     constructor(
       testName: string,
@@ -15,7 +14,6 @@ export class ScheduleHeader {
       this.testName = testName;
       this.startTime = startTime;
       this.endTime = endTime;
-      this.answerStatus = 'not done';
     }
 
 }
