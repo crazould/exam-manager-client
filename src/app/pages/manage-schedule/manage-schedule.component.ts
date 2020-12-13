@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ParticipantService } from 'src/app/services/participant/participant.service';
 
-import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule-header.service';
 import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule-detail.service';
 
 import { Participant } from 'src/app/models/participant/participant.model';
-import { Schedule } from 'src/app/models/schedule/schedule.model';
 import { ScheduleHeader } from 'src/app/models/schedule-header/schedule-header.model';
 import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.model';
 
@@ -20,7 +18,6 @@ import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.m
 export class ManageScheduleComponent implements OnInit {
 
   participants: Participant[] = [];
-  schedules: Schedule[] = [];
 
   scheduleHeaders: ScheduleHeader[] = [];
   scheduleDetails: ScheduleDetail[] = [];
@@ -30,7 +27,6 @@ export class ManageScheduleComponent implements OnInit {
   constructor(
     private titleService: Title,
     private participantService: ParticipantService,
-    private scheduleSerivce: ScheduleService,
     private scheduleHeaderService: ScheduleHeaderService,
     private scheduleDetailService: ScheduleDetailService
   ) {
@@ -53,7 +49,6 @@ export class ManageScheduleComponent implements OnInit {
   }
 
   getSchedules(): void {
-
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
 
       this.scheduleDetailService.getScheduleDetails().subscribe((scheduleDetails) =>{
@@ -63,7 +58,6 @@ export class ManageScheduleComponent implements OnInit {
           scheduleHeader.startTime = new Date(new Date(scheduleHeader.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
           scheduleHeader.endTime = new Date(new Date(scheduleHeader.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
         })
-  
         // console.log(this.scheduleHeaders)
         // console.log(this.scheduleDetails)
 

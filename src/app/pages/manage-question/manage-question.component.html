@@ -1,1 +1,200 @@
-<p>manage-question works!</p>
+<div class="container-fluid">
+
+    <h1>Schedules</h1>
+
+    <table class="table table-striped" >
+
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Test Name</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let header of scheduleHeaders; index as i" (click)="selectScheduleHeader(header)">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{header.testName}}</td>
+                <td>{{header.startTime}}</td>
+                <td>{{header.endTime}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div *ngIf="selectedHeader==undefined">
+        <p class="alert alert-warning">Please select a schedule</p>
+    </div>
+
+    <div class="card" *ngIf="selectedHeader!=undefined">
+        <div class="card-header">
+            <h3>
+                {{selectedHeader.testName}}
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <p>
+                Start : {{selectedHeader.startTime}} <br>
+                End : {{selectedHeader.endTime}}
+            </p>
+
+            <div class="card">
+                <div class="card-header">
+                    <h6>
+                        Create Question
+                    </h6>
+                </div>
+
+                <div class="card-body container">
+                    
+                    <div class="form-group row">
+                        <input 
+                        (input) = "newQuestion.name = $event.target.value" 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Question" 
+                        required>
+                    </div>
+
+                    <div class="form-group row" (click)="setQuestionType(multiple,trueFalse,choose,essay,file)">
+                        <div class="form-check form-check-inline">
+                            <input #multiple type="radio" name="questionType" class="form-check-input">
+                            <label for="" class="form-check-label">
+                                Multiple choice
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input #trueFalse type="radio" name="questionType" class="form-check-input">
+                            <label for="" class="form-check-label">
+                                True False
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input #choose type="radio" name="questionType" class="form-check-input">
+                            <label for="" class="form-check-label">
+                                Choose from list
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input #essay type="radio" name="questionType" class="form-check-input">
+                            <label for="" class="form-check-label">
+                                Essay
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input #file type="radio" name="questionType" class="form-check-input">
+                            <label for="" class="form-check-label">
+                                Submit file
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="multiple.checked">
+
+                        <div class="form-group">
+                            <label for="">
+                                Options :
+                            </label>
+    
+                            <input 
+                                    type="text" class="form-control row" 
+                                    placeholder="Option A" 
+                                    required
+                                    (input) ="multipleOptions[0] = $event.target.value;">
+                            <input 
+                                    type="text" class="form-control row" 
+                                    placeholder="Option B" 
+                                    required
+                                    (input) ="multipleOptions[1] = $event.target.value;">
+                            <input 
+                                    type="text" class="form-control row" 
+                                    placeholder="Option C" 
+                                    required
+                                    (input) ="multipleOptions[2] = $event.target.value;">
+                            <input 
+                                    type="text" class="form-control row" 
+                                    placeholder="Option D" 
+                                    required
+                                    (input) ="multipleOptions[3] = $event.target.value;">
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="">
+                                Right Answer :
+                            </label>
+                            <select class="custom-select" (input)="multipleRightAnswer = $event.target.value">
+
+                                <option 
+                                    *ngFor="let opt of multipleOptions" 
+                                    [value]="opt">
+                                    {{opt}}
+                                </option>
+                                
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group" *ngIf="trueFalse.checked" (click)="setTrueFalseRightAnswer(trueAnswer.checked, falseAnswer.checked)" >
+
+                        <label for="">Right Answer :</label>
+
+                        <div class="form-check">
+                            <input
+                            #trueAnswer 
+                            type="radio"
+                            name="trueFalse" 
+                            class="form-check-input">
+                            <label for="" class="form-check-label">
+                                True
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                            #falseAnswer 
+                            type="radio"
+                            name="trueFalse" 
+                            class="form-check-input">
+                            <label for="" class="form-check-label">
+                                False
+                            </label>
+                        </div>
+                            
+                    </div>
+
+                    <div class="form-group row" *ngIf="choose.checked">
+                        choose
+                    </div>
+                    <div class="form-group row" *ngIf="essay.checked">
+                        essay
+                    </div>
+                    <div class="form-group row" *ngIf="file.checked">
+                        file
+                    </div>
+
+                    <div class="form-group row" 
+                        *ngIf="multiple.checked||
+                            trueFalse.checked||
+                            choose.checked||
+                            essay.checked||
+                            file.checked">
+                        <button class="btn btn-primary" (click)="addQuestion()">
+                            Submit
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

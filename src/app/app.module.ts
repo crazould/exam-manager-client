@@ -13,6 +13,7 @@ import { ManageScheduleComponent } from './pages/manage-schedule/manage-schedule
 import { TestResultComponent } from './pages/test-result/test-result.component';
 import { TestStatusComponent } from './pages/test-status/test-status.component';
 import { TestActivityComponent } from './pages/test-activity/test-activity.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TestActivityComponent } from './pages/test-activity/test-activity.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     Title
