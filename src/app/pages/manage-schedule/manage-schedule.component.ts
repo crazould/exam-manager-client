@@ -24,6 +24,10 @@ export class ManageScheduleComponent implements OnInit {
 
   selectedParticipants: Participant[] = [];
 
+  editTestName: string;
+  editStartTime: any;
+  editEndTime: any;
+
   constructor(
     private titleService: Title,
     private participantService: ParticipantService,
@@ -128,10 +132,10 @@ export class ManageScheduleComponent implements OnInit {
 
   }
 
-  save(id: number, editTestName: string, editStartTime: string, editEndTime: string): void {
+  save(id: number): void {
 
     let index = this.scheduleHeaders.findIndex((p) => p.id = id)
-    let editScheduleHeader =  new ScheduleHeader(editTestName, editStartTime, editEndTime)
+    let editScheduleHeader =  new ScheduleHeader(this.editTestName, this.editStartTime, this.editEndTime)
 
     // console.log(editScheduleHeader)
     // console.log(id)

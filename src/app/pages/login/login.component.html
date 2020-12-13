@@ -1,18 +1,29 @@
-<div>
-    <label for="userEmail">
-        Email
-    </label>
-    <input #userEmail type="email" placeholder="ex: john@gmail.com" required>
+<div class="container-liquid">
+    <div class="card">
+        <div class="card-header">
+            <h2>Login</h2>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="userEmail">
+                    Email
+                </label>
+                <input class="form-control" #userEmail type="email" placeholder="ex: john@gmail.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="Password">
+                    Password
+                </label>
+                <input class="form-control" #userPassword type="password" required>
+            </div>
+            
+            <button class="btn btn-primary">
+                Login
+            </button>
+        </div>
+    </div>
 </div>
 
-<div>
-    <label for="Password">
-        Password
-    </label>
-    <input #userPassword type="password" required>
-</div>
 
-<button>
-    Login
-</button>
 

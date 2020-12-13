@@ -1,13 +1,13 @@
 <div class="container-fluid">
 
     <div class="card">
-        
+
         <div class="card-header">
             <h2>Schedules</h2>
         </div>
-        
+
         <div class="card-body">
-            <table class="table table-striped table-hover" >
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
@@ -17,7 +17,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let header of scheduleHeaders; index as i" (click)="selectScheduleHeader(header)">
+                    <tr *ngFor="let header of scheduleHeaders; index as i"
+                        (click)="selectScheduleHeader(header)">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>{{header.testName}}</td>
                         <td>{{header.startTime}}</td>
@@ -25,7 +26,7 @@
                     </tr>
                 </tbody>
             </table>
-        
+
             <div *ngIf="selectedHeader==undefined">
                 <p class="alert alert-warning">Please select a schedule!</p>
             </div>
@@ -58,50 +59,56 @@
                         <label for="">
                             Question:
                         </label>
-                        <input 
-                        #question
-                        (input) = "newQuestion.name = $event.target.value" 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="question" 
-                        required>
+                        <input
+                            #question
+                            (input)="newQuestion.name= $event.target.value"
+                            type="text"
+                            class="form-control"
+                            placeholder="question"
+                            required>
                     </div>
-                    
+
                     <label for="">
                         Question type:
                     </label>
 
-                    <div class="form-group" (click)="setQuestionType(multiple,trueFalse,choose,essay,file)">
+                    <div class="form-group"
+                        (click)="setQuestionType(multiple,trueFalse,choose,essay,file)">
                         <div class="form-check">
-                            <input #multiple type="radio" name="questionType" class="form-check-input">
+                            <input #multiple type="radio" name="questionType"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 Multiple choice
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input #trueFalse type="radio" name="questionType" class="form-check-input">
+                            <input #trueFalse type="radio" name="questionType"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 True False
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input #choose type="radio" name="questionType" class="form-check-input">
+                            <input #choose type="radio" name="questionType"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 Choose from list
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input #essay type="radio" name="questionType" class="form-check-input">
+                            <input #essay type="radio" name="questionType"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 Essay
                             </label>
                         </div>
 
                         <div class="form-check">
-                            <input #file type="radio" name="questionType" class="form-check-input">
+                            <input #file type="radio" name="questionType"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 Submit file
                             </label>
@@ -116,48 +123,54 @@
                             <label for="">
                                 Options :
                             </label>
-    
+
                             <div class="form-group">
-                                <input 
-                                       type="text" class="form-control row" 
-                                       placeholder="Option A" 
-                                       required
-                                       (input) ="multipleOptions[0] = $event.target.value;">
+                                <input
+                                    type="text" class="form-control row"
+                                    placeholder="Option A"
+                                    required
+                                    (input)="multipleOptions[0]=
+                                    $event.target.value;">
                             </div>
 
                             <div class="form-group">
-                                <input 
-                                      type="text" class="form-control row" 
-                                      placeholder="Option B" 
-                                      required
-                                      (input) ="multipleOptions[1] = $event.target.value;">
+                                <input
+                                    type="text" class="form-control row"
+                                    placeholder="Option B"
+                                    required
+                                    (input)="multipleOptions[1]=
+                                    $event.target.value;">
                             </div>
 
                             <div class="form-group">
-                                <input 
-                                        type="text" class="form-control row" 
-                                        placeholder="Option C" 
-                                        required
-                                        (input) ="multipleOptions[2] = $event.target.value;">
+                                <input
+                                    type="text" class="form-control row"
+                                    placeholder="Option C"
+                                    required
+                                    (input)="multipleOptions[2]=
+                                    $event.target.value;">
                             </div>
 
                             <div class="form-group">
-                                <input 
-                                        type="text" class="form-control row" 
-                                        placeholder="Option D" 
-                                        required
-                                        (input) ="multipleOptions[3] = $event.target.value;">
+                                <input
+                                    type="text" class="form-control row"
+                                    placeholder="Option D"
+                                    required
+                                    (input)="multipleOptions[3]=
+                                    $event.target.value;">
                             </div>
 
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="">
                                 Right Answer :
                             </label>
-                            <select class="custom-select" (input)="multipleRightAnswer = $event.target.value">
-                                <option 
-                                    *ngFor="let opt of multipleOptions" 
+                            <select class="custom-select"
+                                (input)="multipleRightAnswer=
+                                $event.target.value">
+                                <option
+                                    *ngFor="let opt of multipleOptions"
                                     [value]="opt">
                                     {{opt}}
                                 </option>
@@ -166,7 +179,9 @@
 
                     </div>
 
-                    <div class="form-group" *ngIf="trueFalse.checked" (click)="setTrueFalseRightAnswer(trueAnswer.checked, falseAnswer.checked)" >
+                    <div class="form-group" *ngIf="trueFalse.checked"
+                        (click)="setTrueFalseRightAnswer(trueAnswer.checked,
+                        falseAnswer.checked)">
                         <div class="alert alert-info">
                             Question type: true false
                         </div>
@@ -174,26 +189,26 @@
 
                         <div class="form-check">
                             <input
-                            #trueAnswer 
-                            checked
-                            type="radio"
-                            name="trueFalse" 
-                            class="form-check-input">
+                                #trueAnswer
+                                checked
+                                type="radio"
+                                name="trueFalse"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 True
                             </label>
                         </div>
                         <div class="form-check">
                             <input
-                            #falseAnswer 
-                            type="radio"
-                            name="trueFalse" 
-                            class="form-check-input">
+                                #falseAnswer
+                                type="radio"
+                                name="trueFalse"
+                                class="form-check-input">
                             <label for="" class="form-check-label">
                                 False
                             </label>
                         </div>
-                            
+
                     </div>
 
                     <div class="form-group" *ngIf="choose.checked">
@@ -204,19 +219,20 @@
                             new option:
                         </label>
                         <div class="input-group mb-3">
-                            <input 
+                            <input
                                 #chooseOption
-                                (input) = "chooseOption.value = $event.target.value"
-                                type="text" 
-                                class="form-control" 
-                                placeholder="new option" 
-                                aria-label="new option" 
+                                (input)="chooseOption.value=
+                                $event.target.value"
+                                type="text"
+                                class="form-control"
+                                placeholder="new option"
+                                aria-label="new option"
                                 required
                                 aria-describedby="button-addon">
                             <div class="input-group-append">
-                                <button 
-                                    class="btn btn-outline-secondary" 
-                                    type="button" 
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
                                     id="button-addon"
                                     (click)="chooseOptions.push(chooseOption.value);">
                                     add
@@ -227,42 +243,42 @@
                             <label for="">
                                 Right Answer :
                             </label>
-                            <select class="custom-select" (input)="chooseRightAnswer = $event.target.value">
-                                <option 
-                                    *ngFor="let opt of chooseOptions" 
+                            <select class="custom-select"
+                                (input)="chooseRightAnswer=
+                                $event.target.value">
+                                <option
+                                    *ngFor="let opt of chooseOptions"
                                     [value]="opt">
                                     {{opt}}
                                 </option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group " *ngIf="essay.checked">
+                    <div class="form-group"*ngIf="essay.checked">
                         <div class="alert alert-info">
                             Question type: Essay
                         </div>
                     </div>
-                    <div class="form-group " *ngIf="file.checked">
+                    <div class="form-group"*ngIf="file.checked">
                         <div class="alert alert-info">
                             Question type: Submit file
                         </div>
                     </div>
 
-                    <div class="form-group row" 
+                    <div class="form-group row"
                         *ngIf="multiple.checked||
-                            trueFalse.checked||
-                            choose.checked||
-                            essay.checked||
-                            file.checked">
-                        <button class="btn btn-primary" 
-                        (click)="
-                                addQuestion();
-                                multiple.checked =
-                                trueFalse.checked =
-                                choose.checked =
-                                essay.checked =
-                                file.checked = false;
-                                question.value = '';
-                                ">
+                        trueFalse.checked||
+                        choose.checked||
+                        essay.checked||
+                        file.checked">
+                        <button class="btn btn-primary"
+                            (click)="addQuestion();
+                            multiple.checked=
+                            trueFalse.checked=
+                            choose.checked=
+                            essay.checked=
+                            file.checked= false;
+                            question.value= '';">
                             Submit
                         </button>
                     </div>
@@ -278,7 +294,8 @@
                     </h6>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-hover" *ngIf="selectedQuestions.length != 0">
+                    <table class="table table-striped table-hover"
+                        *ngIf="selectedQuestions.length != 0">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
@@ -294,37 +311,44 @@
                                     {{q.questionName}}
                                 </td>
                                 <td *ngIf="q.isEdit">
-                                    <input 
-                                    class="form-control"
-                                    type="text" 
-                                    [value]="q.questionName"
-                                    (input)="editQuestion.name = $event.target.value;" 
-                                    />
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        [value]="q.questionName"
+                                        (input)="editQuestion.name=
+                                        $event.target.value;"
+                                        />
                                 </td>
                                 <td>{{q.questionTypeName}}</td>
                                 <td *ngIf="q.isEdit">
-                                    <button class="btn btn-primary ml-1" (click)="
-                                    q.isEdit = !q.isEdit; saveQuestion(q.id)">
+                                    <button class="btn btn-primary ml-1"
+                                        (click)="q.isEdit= !q.isEdit;
+                                        saveQuestion(q.id)">
                                         Save
                                     </button>
-                                    <button class="btn btn-danger ml-1" (click)="q.isEdit = !q.isEdit">
+                                    <button class="btn btn-danger ml-1"
+                                        (click)="q.isEdit= !q.isEdit">
                                         Cancel
                                     </button>
                                 </td>
                                 <td *ngIf="!q.isEdit && !q.isDelete">
-                                    <button class="btn btn-warning ml-1" (click)="q.isEdit=!q.isEdit;" >
+                                    <button class="btn btn-warning ml-1"
+                                        (click)="q.isEdit=!q.isEdit;">
                                         Edit
                                     </button>
-                                    <button class="btn btn-danger ml-1" (click)="q.isDelete=!q.isDelete;" >
+                                    <button class="btn btn-danger ml-1"
+                                        (click)="q.isDelete=!q.isDelete;">
                                         Delete
                                     </button>
                                 </td>
                                 <td *ngIf="q.isDelete">
                                     <p>Are you sure ?</p>
-                                    <button class="btn btn-primary ml-1"  (click)="deleteQuestion(q.id)">
+                                    <button class="btn btn-primary ml-1"
+                                        (click)="deleteQuestion(q.id)">
                                         Yes
                                     </button>
-                                    <button class="btn btn-danger ml-1" (click)="q.isDelete = !q.isDelete">
+                                    <button class="btn btn-danger ml-1"
+                                        (click)="q.isDelete= !q.isDelete">
                                         No
                                     </button>
                                 </td>

@@ -1,127 +1,153 @@
-<div>
-    
-    <h1>
-        Create Schedule
-    </h1>
-    <div>
-        <label for="testName">
-            Test Name
-        </label>
-    <input #testName type="text">
-    </div>
-    
-    <div>
-        <label for="startTime">
-            Start time
-        </label>
-    <input #startTime type="datetime-local">
-    </div>
-    
-    <div>
-        <label for="endTime">
-            end time
-        </label>
-    <input #endTime type="datetime-local">
-    </div>
-    
-        
-    <div class="checkbox-container">
-        <div *ngFor="let participant of participants">
-            <button for="participantName" (click)="setParticipantSchedule(participant, $event.target)" >
-                {{participant.username}}
-            </button>
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                Create Schedule
+            </h2>
         </div>
-    </div>
+        <div class="card-body">
 
-    <button class="btn btn-primary" (click)="add(testName.value, startTime.value, endTime.value)">
-        Submit
-    </button>
-
-    <h1>Schedules</h1>
-    <div *ngFor="let schedule of scheduleHeaders">
-        
-        <div *ngIf="!schedule.isEdit">
-            <h3>
-                {{schedule.testName}}
-            </h3>
-            <div>
-                <label for="startTime">
-                    Start time:
-                </label>
-                {{schedule.startTime}}
-            </div>
-            <div>
-                <label for="endTime">
-                    End time: 
-                </label>
-                {{schedule.endTime}}
-            </div>
-        </div>
-
-        <div *ngIf="schedule.isEdit">
-            <div>
+            <div class="form-group">
                 <label for="testName">
                     Test Name
                 </label>
-                <input 
-                    type="text" 
-                    [value]="schedule.testName"
-                    (input)="editTestName.value = $event.target.value;" 
-                    #editTestName />
-                
+                <input
+                    required placeholder="Test Name" class="form-control"
+                    #testName type="text">
             </div>
-            <div>
 
+            <div class="form-group">
                 <label for="startTime">
                     Start time
-                </label> 
-                <input 
-                    type="datetime-local"
-                    [value]="schedule.startTime"
-                    (input)="editStartTime.value = $event.target.value;"    
-                    #editStartTime />
-        
+                </label>
+                <input
+                    required class="form-control" #startTime
+                    type="datetime-local">
             </div>
-            <div>
 
+            <div class="form-group">
                 <label for="endTime">
                     End time
                 </label>
-                <input 
-                    type="datetime-local"
-                    [value]="schedule.endTime"
-                    (input)="editEndTime.value = $event.target.value"    
-                    #editEndTime />
+                <input
+                    required class="form-control" #endTime
+                    type="datetime-local">
             </div>
 
-            <button (click)="
-            schedule.isEdit = !schedule.isEdit; save(schedule.id, editTestName.value, editStartTime.value, editEndTime.value)">
-                Save
-            </button>
-            <button (click)="schedule.isEdit = !schedule.isEdit">
-                Cancel
-            </button>
-        </div>
-     
-        <div *ngIf="!schedule.isEdit && !schedule.isDelete">
-            <button (click)="schedule.isEdit = !schedule.isEdit;">
-                Edit
-            </button>
-            <button (click)="schedule.isDelete = !schedule.isDelete">
-                Delete
-            </button>
-        </div>
-    
-        <div *ngIf="schedule.isDelete">
-            <p>Are you sure ?</p>
-            <button (click)="delete(schedule.id)">
-                Yes
-            </button>
-            <button (click)="schedule.isDelete = !schedule.isDelete">
-                No
-            </button>
-        </div>
+            <div class="form-group">
+                <label for="">Select Participant</label>
+                <div class="checkbox-container">
+                    <div *ngFor="let participant of participants">
+                        <button class="btn btn-outline-secondary"
+                            for="participantName"
+                            (click)="setParticipantSchedule(participant,
+                            $event.target)">
+                            {{participant.username}}
+                        </button>
+                    </div>
+                </div>
+                
 
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="add(testName.value,
+                    startTime.value, endTime.value)">
+                    Submit
+                </button>
+            </div>
+        </div>
     </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h2>Schedules</h2>
+        </div>
+        <div class="card-body">
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Test Name</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let schedule of scheduleHeaders">
+                        <td *ngIf="!schedule.isEdit">
+                            {{schedule.testName}}
+                        </td>
+                        <td *ngIf="!schedule.isEdit">
+                            {{schedule.startTime}}
+
+                        </td>
+                        <td *ngIf="!schedule.isEdit">
+                            {{schedule.endTime}}
+                        </td>
+                        <td *ngIf="schedule.isEdit">
+                            <input
+                                required
+                                class="form-control"
+                                type="text"
+                                [value]="schedule.testName"
+                                (input)="editTestName= $event.target.value;"
+                                />
+                        </td>
+                        <td *ngIf="schedule.isEdit">
+                            <input
+                                required
+                                class="form-control"
+                                type="datetime-local"
+                                [value]="schedule.startTime"
+                                (input)="editStartTime= $event.target.value;"
+                                />
+                        </td>
+                        <td *ngIf="schedule.isEdit">
+                            <input
+                                required
+                                class="form-control"
+                                type="datetime-local"
+                                [value]="schedule.endTime"
+                                (input)="editEndTime= $event.target.value"
+                                />
+                        </td>
+                        <td *ngIf="schedule.isEdit">
+                            <button class="btn btn-primary ml-1"
+                                (click)="schedule.isEdit= !schedule.isEdit;
+                                save(schedule.id)">
+                                Save
+                            </button>
+                            <button class="btn btn-danger ml-1"
+                                (click)="schedule.isEdit= !schedule.isEdit">
+                                Cancel
+                            </button>
+                        </td>
+                        <td *ngIf="!schedule.isEdit && !schedule.isDelete">
+                            <button class="btn btn-warning ml-1"
+                                (click)="schedule.isEdit= !schedule.isEdit;">
+                                Edit
+                            </button>
+                            <button class="btn btn-danger ml-1"
+                                (click)="schedule.isDelete= !schedule.isDelete">
+                                Delete
+                            </button>
+                        </td>
+                        <td *ngIf="schedule.isDelete">
+                            <p>Are you sure ?</p>
+                            <button class="btn btn-primary ml-1"
+                                (click)="delete(schedule.id)">
+                                Yes
+                            </button>
+                            <button class="btn btn-danger ml-1"
+                                (click)="schedule.isDelete= !schedule.isDelete">
+                                No
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
