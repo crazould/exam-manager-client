@@ -7,10 +7,9 @@ export class User {
     isEdit: boolean
     isDelete: boolean
 
-    constructor(name: string, email: string, password: string) {
+    constructor(name: string, email: string) {
         this.username = name,
         this.email = email,
-        this.password = password,
         this.isEdit = false,
         this.isDelete = false
     }

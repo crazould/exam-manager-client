@@ -1,108 +1,116 @@
-<form action="" method="post">
-    <h1>
-        Create Participant
-    </h1>
-    <div>
-        <label for="participantName">
-            Name
-        </label>
-        <input type="text" placeholder="ex: John Lennon" #participantName />
-    </div>
-
-    <div>
-        <label for="participantEmail">
-            Email
-        </label>
-        <input type="email" placeholder="ex: John@something.com" #participantEmail />
-    </div>
-
-    <div>
-        <label for="participantPassword">
-            Password
-        </label>
-        <input type="password" placeholder="ex: j0hN47@n!?" #participantPassword />
-    </div>
-
-    <input type="button" value="Submit" (click)="
-      add(
-        participantName.value,
-        participantEmail.value,
-        participantPassword.value
-      );
-      participantName.value = '';
-      participantEmail.value = '';
-      participantPassword.value = ''
-    " />
-</form>
-
-<h1>Participants</h1>
-<div *ngFor="let participant of participants">
-    <div *ngIf="!participant.isEdit">
-        <h3>{{ participant.username }}</h3>
-        <div>{{ participant.email }}</div>
-    </div>
-
-    <div *ngIf="participant.isEdit">
-        <div>
-            <label for="participantName">
-                Name
-            </label>
-            <input 
-                type="text" 
-                [value]="participant.username" 
-                (input)="editParticipantName.value = $event.target.value;" 
-                #editParticipantName />
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                Create Participant
+            </h2>
         </div>
-        <div>
-            <label for="participantEmail">
-                Email
-            </label>
-            <input 
-                type="email" 
-                [value]="participant.email" 
-                (input)="editParticipantEmail.value = $event.target.value;"
-                #editParticipantEmail />
+        <div class="card-body">
+            <div class="form-group">
+                <label for="participantName">
+                    Name
+                </label>
+                <input class="form-control" type="text" placeholder="ex: John Lennon" #participantName />
+            </div>
+        
+            <div class="form-group">
+                <label for="participantEmail">
+                    Email
+                </label>
+                <input class="form-control" type="email" placeholder="ex: John@something.com" #participantEmail />
+            </div>
+        
+            <div class="form-group">
+                <label for="participantPassword">
+                    Password
+                </label>
+                <input class="form-control" type="password" placeholder="ex: j0hN47@n!?" #participantPassword />
+            </div>
+            <input class="btn btn-primary" type="button" value="Submit" (click)="
+              add(
+                participantName.value,
+                participantEmail.value,
+                participantPassword.value
+              );
+              participantName.value = '';
+              participantEmail.value = '';
+              participantPassword.value = ''
+            " />
         </div>
-        <div>
-            <label for="participantPassword">
-                Password
-            </label>
-            <input 
-                type="password" 
-                [value]="participant.password" 
-                (input)="editParticipantPassword.value = $event.target.value;" 
-                #editParticipantPassword/>
-        </div>
-        <button (click)="
-            save(
-                participant.id, 
-                editParticipantName.value, 
-                editParticipantEmail.value, 
-                editParticipantPassword.value)">
-            Save
-        </button>
-        <button (click)="participant.isEdit = !participant.isEdit">
-            Cancel
-        </button>
     </div>
 
-    <div *ngIf="!participant.isEdit && !participant.isDelete">
-        <button (click)="participant.isEdit = !participant.isEdit">
-            Edit
-        </button>
-        <button (click)="participant.isDelete = !participant.isDelete">
-            Delete
-        </button>
+    <div class="card">
+        <div class="card-header">
+            <h2>Participants</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of participants; index as i">
+                        <th>{{i+1}}</th>
+                        <td *ngIf="!p.isEdit">
+                            {{p.username}}
+                        </td>
+                        <td *ngIf="p.isEdit">
+                            <input 
+                            class="form-control"
+                            placeholder="username"
+                            type="text" 
+                            [value]="p.username" 
+                            (input)="editParticipantName = $event.target.value;" 
+                             />
+                        </td>
+                        <td *ngIf="!p.isEdit">
+                            {{p.email}}
+                        </td>
+                        <td *ngIf="p.isEdit">
+                            <input 
+                            class="form-control"
+                            placeholder="email"
+                            type="email" 
+                            [value]="p.email" 
+                            (input)="editParticipantEmail = $event.target.value;"
+                            />
+                        </td>
+                        <td *ngIf="p.isEdit">
+                            <button class="btn btn-primary ml-1" (click)="
+                            p.isEdit = !p.isEdit; save(p.id)">
+                                Save
+                            </button>
+                            <button class="btn btn-danger ml-1" (click)="p.isEdit = !p.isEdit">
+                                Cancel
+                            </button>
+                        </td>
+                        <td *ngIf="!p.isEdit && !p.isDelete">
+                            <button class="btn btn-warning ml-1" (click)="p.isEdit=!p.isEdit;" >
+                                Edit
+                            </button>
+                            <button class="btn btn-danger ml-1" (click)="p.isDelete=!p.isDelete;" >
+                                Delete
+                            </button>
+                        </td>
+                        <td *ngIf="p.isDelete">
+                            <p>Are you sure ?</p>
+                            <button class="btn btn-primary ml-1"  (click)="delete(p.id)">
+                                Yes
+                            </button>
+                            <button class="btn btn-danger ml-1" (click)="p.isDelete = !p.isDelete">
+                                No
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div *ngIf="participant.isDelete">
-        <p>Are you sure ?</p>
-        <button (click)="delete(participant.id)">
-            Yes
-        </button>
-        <button (click)="participant.isDelete = !participant.isDelete">
-            No
-        </button>
-    </div>
 
 </div>

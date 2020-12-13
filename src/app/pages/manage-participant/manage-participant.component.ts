@@ -11,6 +11,8 @@ import { ParticipantService } from '../../services/participant/participant.servi
 export class ManageParticipantComponent implements OnInit {
   
   participants: Participant[] = [];
+  editParticipantName: string;
+  editParticipantEmail: string;
 
   constructor(
     private titleService: Title,
@@ -34,16 +36,17 @@ export class ManageParticipantComponent implements OnInit {
   }
 
   add(name: string, email: string, password: string): void {
-    let participant = new Participant(name, email, password);
+    let participant = new Participant(name, email);
+    participant.password = password
 
     this.participantService.addParticipant(participant).subscribe((p) => {
       this.participants.push(p);
     });
   }
 
-  save(id: number, name: any, email: any, password: any): void {
+  save(id: number): void {
     let index = this.participants.findIndex((p) => p.id == id);
-    let editParticipant = new Participant(name, email, password);
+    let editParticipant = new Participant(this.editParticipantName, this.editParticipantEmail);
 
     this.participantService.updateParticipant(id, editParticipant).subscribe((participant) => {
       this.participants.splice(index, 1, participant);

@@ -1,35 +1,42 @@
 <div class="container-fluid">
 
-    <h1>Schedules</h1>
-
-    <table class="table table-striped table-hover" >
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Test Name</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let header of scheduleHeaders; index as i" (click)="selectScheduleHeader(header)">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>{{header.testName}}</td>
-                <td>{{header.startTime}}</td>
-                <td>{{header.endTime}}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div *ngIf="selectedHeader==undefined">
-        <p class="alert alert-warning">Please select a schedule!</p>
+    <div class="card">
+        
+        <div class="card-header">
+            <h2>Schedules</h2>
+        </div>
+        
+        <div class="card-body">
+            <table class="table table-striped table-hover" >
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Test Name</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let header of scheduleHeaders; index as i" (click)="selectScheduleHeader(header)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{header.testName}}</td>
+                        <td>{{header.startTime}}</td>
+                        <td>{{header.endTime}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div *ngIf="selectedHeader==undefined">
+                <p class="alert alert-warning">Please select a schedule!</p>
+            </div>
+        </div>
     </div>
 
     <div class="card" *ngIf="selectedHeader!=undefined">
         <div class="card-header">
-            <h3>
+            <h4>
                 {{selectedHeader.testName}}
-            </h3>
+            </h4>
         </div>
 
         <div class="card-body">
