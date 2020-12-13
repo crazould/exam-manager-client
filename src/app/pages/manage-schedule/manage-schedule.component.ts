@@ -60,7 +60,6 @@ export class ManageScheduleComponent implements OnInit {
         })
         // console.log(this.scheduleHeaders)
         // console.log(this.scheduleDetails)
-
       })
     });
   }
@@ -102,8 +101,7 @@ export class ManageScheduleComponent implements OnInit {
     let startTimeDate = new Date(new Date(startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
     let endTimeDate = new Date(new Date(endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
 
-
-      let scheduleHeader: ScheduleHeader =
+    let scheduleHeader: ScheduleHeader =
         new ScheduleHeader(
           testName,
           startTimeDate,

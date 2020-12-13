@@ -2,7 +2,7 @@
 
     <h1>Schedules</h1>
 
-    <table class="table table-striped" >
+    <table class="table table-striped table-hover" >
         <thead>
             <tr>
                 <th scope="col">No</th>
@@ -271,7 +271,7 @@
                     </h6>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped" *ngIf="selectedQuestions.length != 0">
+                    <table class="table table-striped table-hover" *ngIf="selectedQuestions.length != 0">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
@@ -283,11 +283,43 @@
                         <tbody>
                             <tr *ngFor="let q of selectedQuestions; index as i">
                                 <th scope="row">{{ i + 1 }}</th>
-                                <td>{{q.questionName}}</td>
+                                <td *ngIf="!q.isEdit">
+                                    {{q.questionName}}
+                                </td>
+                                <td *ngIf="q.isEdit">
+                                    <input 
+                                    class="form-control"
+                                    type="text" 
+                                    [value]="q.questionName"
+                                    (input)="editQuestion.name = $event.target.value;" 
+                                    />
+                                </td>
                                 <td>{{q.questionTypeName}}</td>
-                                <td>
-                                    <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                <td *ngIf="q.isEdit">
+                                    <button class="btn btn-primary ml-1" (click)="
+                                    q.isEdit = !q.isEdit; saveQuestion(q.id)">
+                                        Save
+                                    </button>
+                                    <button class="btn btn-danger ml-1" (click)="q.isEdit = !q.isEdit">
+                                        Cancel
+                                    </button>
+                                </td>
+                                <td *ngIf="!q.isEdit && !q.isDelete">
+                                    <button class="btn btn-warning ml-1" (click)="q.isEdit=!q.isEdit;" >
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-danger ml-1" (click)="q.isDelete=!q.isDelete;" >
+                                        Delete
+                                    </button>
+                                </td>
+                                <td *ngIf="q.isDelete">
+                                    <p>Are you sure ?</p>
+                                    <button class="btn btn-primary ml-1"  (click)="deleteQuestion(q.id)">
+                                        Yes
+                                    </button>
+                                    <button class="btn btn-danger ml-1" (click)="q.isDelete = !q.isDelete">
+                                        No
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

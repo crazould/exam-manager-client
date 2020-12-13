@@ -25,6 +25,8 @@ export class ManageQuestionComponent implements OnInit {
   newQuestion: Question;
   newQuestionOptions: QuestionOption;
 
+  editQuestion: Question  = new Question("","");
+
   multipleOptions: string[] = [];
   multipleRightAnswer: string;
 
@@ -100,7 +102,7 @@ export class ManageQuestionComponent implements OnInit {
     }
   }
 
-  addQuestion(): void{
+  addQuestion(): void {
     
     if(this.newQuestion.name == ""){
       alert("Please fill the question!")
@@ -186,6 +188,25 @@ export class ManageQuestionComponent implements OnInit {
     this.newQuestion = new Question("", "")
   }
 
+  saveQuestion(id: number, questionName: string): void {
+    console.log(id)
+    console.log(this.editQuestion.name)
+    let index = this.questions.findIndex(e => e.id == id)
+    this.questionService.updateQuestion(id, this.editQuestion).subscribe((q) => {
+      this.questions.splice(index, 1, q)
+      this.selectScheduleHeader(this.selectedHeader)
+    })
+  }
+
+  deleteQuestion(id: number): void {
+    let index = this.questions.findIndex(q => q.id == id)
+
+    this.questionService.deleteQuestion(id).subscribe(() => {
+      this.questions.splice(index, 1)
+      this.selectScheduleHeader(this.selectedHeader)
+    })
+
+  }
 
 
 }

@@ -28,7 +28,14 @@ export class QuestionService {
     );
   }
 
-  
+  updateQuestion(id: number, Question: Question): Observable<Question> {
+    let url = `${this.questionUrl}/${id}}`
+    return this.http.put<Question>(url, Question, this.httpOptions)
+  }
 
+  deleteQuestion(id: number): Observable<Question> {
+    let url = `${this.questionUrl}/${id}`
+    return this.http.delete<Question>(url, this.httpOptions)
+  }
 
 }
