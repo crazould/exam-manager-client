@@ -11,7 +11,7 @@ export class ScheduleHeaderService {
 
   private scheduleHeaderUrl: string = environment.apiUrl + '/schedule-header';
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
 
@@ -31,7 +31,6 @@ export class ScheduleHeaderService {
 
   updateScheduleHeader(id: number, scheduleHeader: ScheduleHeader): Observable<ScheduleHeader> {
     let url = `${this.scheduleHeaderUrl}/${id}}`
-    
     return this.http.put<ScheduleHeader>(url, scheduleHeader, this.httpOptions)
   }
 

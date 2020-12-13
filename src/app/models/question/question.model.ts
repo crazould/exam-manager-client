@@ -2,7 +2,6 @@ export class Question {
     id: number
     scheduleID: number
     type: string = ""
-    options: string[]
     name: string
     rightAnswer: string
 
@@ -13,22 +12,12 @@ export class Question {
 
     public setRightAnswer(rightAnswer:string): void{
         if( this.type === "multiple" ||
-            this.type === "trueFalse" ||
+            this.type === "true false" ||
             this.type === "choose" ){
                 this.rightAnswer = rightAnswer
             }
     }
-
-    public setOptions(options :string[]): void{
-        if( this.type === "multiple" ||
-        this.type === "choose" ){
-            this.options = options
-        }
-        else if(this.type === "trueFalse" ){
-            options = ["true", "false"]
-            this.options = options
-        }
-    }
+    
 
 
 }

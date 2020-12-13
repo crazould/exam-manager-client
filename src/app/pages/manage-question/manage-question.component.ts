@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.model';
 import { ScheduleHeader } from 'src/app/models/schedule-header/schedule-header.model';
-import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule-detail.service';
 import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule-header.service';
+import { QuestionService } from 'src/app/services/question/question.service';
+import { QuestionOptionService } from 'src/app/services/question-option/question-option.service';
 import { Question } from 'src/app/models/question/question.model'
+import { QuestionOption } from 'src/app/models/question-option/question-option.model'
+
 
 @Component({
   selector: 'app-manage-question',
@@ -15,27 +17,34 @@ export class ManageQuestionComponent implements OnInit {
 
 
   scheduleHeaders: ScheduleHeader[] = [];
-  scheduleDetails: ScheduleDetail[] = [];
+  questions: Question[] = [];
 
   selectedHeader: ScheduleHeader;
-  newQuestion: Question;
+  selectedQuestions: Question[] = [];
 
-  multipleOptions: string[];
+  newQuestion: Question;
+  newQuestionOptions: QuestionOption;
+
+  multipleOptions: string[] = [];
   multipleRightAnswer: string;
 
   trueFalseRightAnswer: string;
 
+  chooseOptions: string[] = [];
+  chooseRightAnswer: string = 'true';
+
   constructor(
     private titleService: Title,
     private scheduleHeaderService: ScheduleHeaderService,
-    private scheduleDetailService: ScheduleDetailService
+    private questionService: QuestionService,
+    private questionOptionService: QuestionOptionService
   ) { 
     this.setTitle("Manage Question")
   }
 
   ngOnInit(): void {
-    this.getSchedules()
-    this.newQuestion = new Question("", "")
+    this.getSchedules();
+    this.newQuestion = new Question("", "");
   }
 
   setTitle(pageTitle: string): void {
@@ -45,21 +54,26 @@ export class ManageQuestionComponent implements OnInit {
   getSchedules(): void {
 
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
-      this.scheduleDetailService.getScheduleDetails().subscribe((scheduleDetails) =>{
         this.scheduleHeaders = scheduleHeaders;
-        this.scheduleDetails = scheduleDetails;
-        this.scheduleHeaders.map(scheduleHeader => {
-          scheduleHeader.startTime = new Date(new Date(scheduleHeader.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
-          scheduleHeader.endTime = new Date(new Date(scheduleHeader.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
-        })
+        this.getQuestions();
         // console.log(this.scheduleHeaders)
-        // console.log(this.scheduleDetails)
-      })
     });
+  }
+
+  getQuestions(): void{
+    this.questionService.getQuestions().subscribe((qs) => {
+      this.questions = qs
+      if(this.scheduleHeaders.length != 0){
+        this.selectScheduleHeader(this.scheduleHeaders[0]);
+      }
+    })
   }
 
   selectScheduleHeader(header: ScheduleHeader): void{
     this.selectedHeader = header;
+    this.newQuestion.scheduleID = header.id;
+    this.selectedQuestions = this.questions.filter(q => q.scheduleID == header.id)
+    // console.log(this.selectedQuestions)
   }
 
   setTrueFalseRightAnswer(trueAnswer, falseAnswer): void{
@@ -73,7 +87,7 @@ export class ManageQuestionComponent implements OnInit {
       this.multipleOptions = ["Option A", "Option B", "Option C", "Option D"]
     }
     else if(trueFalse.checked){
-      this.newQuestion.type = "trueFalse"
+      this.newQuestion.type = "true false"
     }
     else if(choose.checked){
       this.newQuestion.type = "choose"
@@ -87,28 +101,89 @@ export class ManageQuestionComponent implements OnInit {
   }
 
   addQuestion(): void{
+    
+    if(this.newQuestion.name == ""){
+      alert("Please fill the question!")
+      return;
+    }
+
     switch(this.newQuestion.type){
       case "multiple":
-        console.log(this.newQuestion.name)
-        console.log(this.multipleOptions)
-        console.log(this.multipleRightAnswer)
+
+        if(this.multipleRightAnswer == undefined)
+          this.multipleRightAnswer = this.multipleOptions[0]
+        
+        this.newQuestion.rightAnswer = this.multipleRightAnswer;
+        // console.log(this.newQuestion)
+        this.questionService.addQuestion(this.newQuestion).subscribe((question)=>{
+          // console.log(question)
+          this.questions.push(question)
+          this.newQuestionOptions = new QuestionOption(
+            question.id,
+            this.multipleOptions
+          )
+          this.questionOptionService.addQuestionOptions(this.newQuestionOptions).subscribe((questionOptions) =>{
+            // console.log(questionOptions)
+            this.selectScheduleHeader(this.selectedHeader)
+
+          })
+        })
         break;
-      case "trueFalse":
-        console.log(this.newQuestion.name)
-        console.log(this.trueFalseRightAnswer)
+
+      case "true false":
+      
+        this.newQuestion.rightAnswer = this.trueFalseRightAnswer;
+        this.questionService.addQuestion(this.newQuestion).subscribe((question)=>{
+          // console.log(question)
+          this.questions.push(question)
+          this.selectScheduleHeader(this.selectedHeader)
+         
+        })
         break;
+
       case "choose":
-        console.log("choose")
 
+        if(this.chooseRightAnswer == undefined) {
+          this.chooseRightAnswer = this.chooseOptions[0]
+        }
+
+        this.newQuestion.rightAnswer = this.chooseRightAnswer;
+        // console.log(this.newQuestion)
+        this.questionService.addQuestion(this.newQuestion).subscribe((question)=>{
+          // console.log(question)
+          this.questions.push(question)
+          this.newQuestionOptions = new QuestionOption(
+            question.id,
+            this.chooseOptions
+          )
+          this.questionOptionService.addQuestionOptions(this.newQuestionOptions).subscribe((questionOptions) =>{
+            // console.log(questionOptions)
+            this.selectScheduleHeader(this.selectedHeader)
+
+          })
+        })
         break;
+
       case "essay":
-        console.log("essay")
-        break;
-      case "file":
-        console.log("file")
+        this.questionService.addQuestion(this.newQuestion).subscribe((question)=>{
+          // console.log(question)
+          this.questions.push(question)
+          this.selectScheduleHeader(this.selectedHeader)
+
+        })
         break;
 
+      case "file":
+        this.questionService.addQuestion(this.newQuestion).subscribe((question)=>{
+          // console.log(question)
+          this.questions.push(question)
+          this.selectScheduleHeader(this.selectedHeader)
+
+        })
+        break;
     }
+
+    this.newQuestion = new Question("", "")
   }
 
 
