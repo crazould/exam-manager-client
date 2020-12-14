@@ -6,6 +6,8 @@ export class ScheduleDetail {
 
     totalParticipants: number;
     participants: Participant[];
+    userID: number;
+    score: number;
     answerStatus: string;
 
     constructor(

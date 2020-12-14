@@ -54,7 +54,6 @@ export class ManageQuestionComponent implements OnInit {
   }
 
   getSchedules(): void {
-
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
         this.scheduleHeaders = scheduleHeaders;
         this.getQuestions();
