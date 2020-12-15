@@ -35,6 +35,21 @@
             </div>
 
             <div class="form-group">
+                <label for="endTime">
+                    Test Type
+                </label>
+                <select 
+                    (input) = "newTestType = $event.target.value"
+                    class="custom-select">
+                    <option value="multiple">Multiple Option</option>
+                    <option value="true false">True False</option>
+                    <option value="choose">Choose from list</option>
+                    <option value="essay">Essay</option>
+                    <option value="file">Submit File</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="">Select Participant</label>
                 <div class="checkbox-container">
                     <div *ngFor="let participant of participants">
@@ -69,14 +84,22 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Test Name</th>
+                        <th scope="col">Test Type</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">End Time</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let schedule of scheduleHeaders">
+                    <tr *ngFor="let schedule of scheduleHeaders; index as i">
+                        <th>
+                            {{i + 1}}
+                        </th>
                         <td *ngIf="!schedule.isEdit">
                             {{schedule.testName}}
+                        </td>
+                        <td *ngIf="!schedule.isEdit">
+                            {{schedule.testType}}
                         </td>
                         <td *ngIf="!schedule.isEdit">
                             {{schedule.startTime}}
@@ -93,6 +116,18 @@
                                 [value]="schedule.testName"
                                 (input)="editTestName= $event.target.value;"
                                 />
+                        </td>
+                        <td *ngIf="schedule.isEdit">
+                            <select 
+                                (input) = "editTestType = $event.target.value"
+                                [value] = "schedule.testType"
+                                class="custom-select">
+                                <option value="multiple">Multiple Option</option>
+                                <option value="true false">True False</option>
+                                <option value="choose">Choose from list</option>
+                                <option value="essay">Essay</option>
+                                <option value="file">Submit File</option>
+                            </select>
                         </td>
                         <td *ngIf="schedule.isEdit">
                             <input

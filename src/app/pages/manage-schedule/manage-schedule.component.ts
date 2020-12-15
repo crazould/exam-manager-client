@@ -18,6 +18,7 @@ import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.m
 export class ManageScheduleComponent implements OnInit {
 
   participants: Participant[] = [];
+  newTestType: string;
 
   scheduleHeaders: ScheduleHeader[] = [];
   scheduleDetails: ScheduleDetail[] = [];
@@ -25,6 +26,7 @@ export class ManageScheduleComponent implements OnInit {
   selectedParticipants: Participant[] = [];
 
   editTestName: string;
+  editTestType: string;
   editStartTime: any;
   editEndTime: any;
 
@@ -105,16 +107,15 @@ export class ManageScheduleComponent implements OnInit {
     let startTimeDate = new Date(new Date(startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
     let endTimeDate = new Date(new Date(endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
 
+    if(this.newTestType == undefined) this.newTestType = "multiple";
+
     let scheduleHeader: ScheduleHeader =
-        new ScheduleHeader(
-          testName,
-          startTimeDate,
-          endTimeDate,
-        )
+        new ScheduleHeader(testName,this.newTestType,startTimeDate,endTimeDate)
+
 
       this.scheduleHeaderService.addScheduleHeader(scheduleHeader).subscribe((scheduleHeader) => {
         
-        // console.log(scheduleHeader)
+        console.log(scheduleHeader)
         this.scheduleHeaders.push(scheduleHeader)
 
         let scheduleDetail: ScheduleDetail = new ScheduleDetail(
@@ -123,22 +124,28 @@ export class ManageScheduleComponent implements OnInit {
         )
 
         this.scheduleDetailService.addScheduleDetail(scheduleDetail).subscribe((scheduleDetail) => {
-          console.log(scheduleDetail)
+          // console.log(scheduleDetail)
           this.scheduleDetails.push(scheduleDetail)
         })
 
       })
 
-
   }
 
   save(id: number): void {
 
-    let index = this.scheduleHeaders.findIndex((p) => p.id = id)
-    let editScheduleHeader =  new ScheduleHeader(this.editTestName, this.editStartTime, this.editEndTime)
+    let index = this.scheduleHeaders.findIndex((p) => p.id == id)
+    
+    if (this.editTestName==undefined) this.editTestName = this.scheduleHeaders[index].testName;
+    if (this.editTestType==undefined) this.editTestType = this.scheduleHeaders[index].testType;
+    if (this.editStartTime==undefined) this.editStartTime = this.scheduleHeaders[index].startTime;
+    if (this.editEndTime==undefined) this.editEndTime = this.scheduleHeaders[index].endTime;
+
+    let editScheduleHeader =  new ScheduleHeader(this.editTestName, this.editTestType ,this.editStartTime, this.editEndTime)
 
     // console.log(editScheduleHeader)
-    // console.log(id)
+    console.log(id)
+    console.log(index)
 
     this.scheduleHeaderService.updateScheduleHeader(id, editScheduleHeader).subscribe((scheduleHeader) => {
       this.scheduleHeaders.splice(index, 1, scheduleHeader)

@@ -82,24 +82,6 @@ export class ManageQuestionComponent implements OnInit {
     else if(falseAnswer) this.trueFalseRightAnswer = "false";
   }
 
-  setQuestionType(multiple,trueFalse,choose,essay,file): void{
-    if(multiple.checked){
-      this.newQuestion.type = "multiple"
-      this.multipleOptions = ["Option A", "Option B", "Option C", "Option D"]
-    }
-    else if(trueFalse.checked){
-      this.newQuestion.type = "true false"
-    }
-    else if(choose.checked){
-      this.newQuestion.type = "choose"
-    }
-    else if(essay.checked){
-      this.newQuestion.type = "essay"
-    }
-    else if(file.checked){
-      this.newQuestion.type = "file"
-    }
-  }
 
   addQuestion(): void {
     
@@ -108,7 +90,7 @@ export class ManageQuestionComponent implements OnInit {
       return;
     }
 
-    switch(this.newQuestion.type){
+    switch(this.selectedHeader.testType){
       case "multiple":
 
         if(this.multipleRightAnswer == undefined)

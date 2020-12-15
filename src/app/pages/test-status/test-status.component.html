@@ -39,10 +39,13 @@
 
         <div class="card-body">
 
-            <p>
+            <div class="lead">
+                Test Type: {{selectedHeader.testType}}<br>
                 Start : {{selectedHeader.startTime}} <br>
                 End : {{selectedHeader.endTime}}
-            </p>
+            </div>
+
+            <hr>
 
             <div class="alert alert-warning" *ngIf="selectedDetails.length == 0">
                 There is no participant mapped with this schedule
