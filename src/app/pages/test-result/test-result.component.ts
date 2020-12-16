@@ -22,7 +22,6 @@ export class TestResultComponent implements OnInit {
   selectedDetails: ScheduleDetail[] = [];
 
   participants: Participant[] = [];
-  selectedParticipants: Participant[] = [];
 
 
   constructor(
@@ -67,7 +66,6 @@ export class TestResultComponent implements OnInit {
   selectScheduleHeader(header: ScheduleHeader): void{
     this.selectedHeader = header;
     // console.log(this.scheduleDetails)
-
     if(this.scheduleDetails.length != 0) {
       this.selectedDetails = this.scheduleDetails.filter(sd => sd.scheduleID == header.id)
       this.selectedDetails.map(e => {
@@ -75,9 +73,7 @@ export class TestResultComponent implements OnInit {
         let p = this.participants.find(p => p.id == e.userID)
         e.participants.push(p)
       })
-
     }
-    
   }
 
 }

@@ -1,9 +1,12 @@
+import { QuestionOption } from "../question-option/question-option.model"
+
 export class Question {
     id: number
     scheduleID: number
     type: string = ""
     name: string
     rightAnswer: string
+    options: QuestionOption[] = [];
 
     constructor(name: string, type: string) {
         this.name = name

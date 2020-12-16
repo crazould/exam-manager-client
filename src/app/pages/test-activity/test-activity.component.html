@@ -1,1 +1,89 @@
-<p>test-activity works!</p>
+<div class="container-fluid">
+
+    <div class="card">
+        <div class="card-header">
+            <h2>My Exam Schedules</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info" *ngIf="filteredHeaders.length == 0">
+                you don't have any exam schedule
+            </div>
+            <table class="table table-striped table-hover" *ngIf="filteredHeaders.length != 0">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Test Name</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let header of filteredHeaders; index as i"
+                        (click)="selectScheduleHeader(header)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{header.testName}}</td>
+                        <td>{{header.startTime}}</td>
+                        <td>{{header.endTime}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="selectedHeader==undefined && filteredHeaders.length != 0">
+                <p class="alert alert-warning">Please select a schedule!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card" *ngIf="selectedHeader!=undefined && examMode == false">
+
+        <div class="card-header">
+            {{selectedHeader.testName}}
+        </div>
+        <div class="card-body">
+
+            <div class="lead">
+                Test Type: {{selectedHeader.testType}}<br>
+                Start : {{selectedHeader.startTime}} <br>
+                End : {{selectedHeader.endTime}}
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="examMode = true">
+                    Start Test
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card" *ngIf="selectedHeader!=undefined && examMode == true">
+        <div class="card-header">
+            {{selectedHeader.testName}}
+        </div>
+        <div class="card-body">
+
+            <div class="my-2" *ngFor="let q of filteredQuestions; index as i">
+                
+                <div>{{ i + 1 }}. {{q.questionName}}</div>
+                <div class="form-check row ml-3" *ngFor="let opt of q.options">
+                    <input type="radio" [value]="opt.optionName" class="form-check-input">
+                    <label for="">{{opt.optionName}}</label>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="examMode = false">
+                    End Test
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
