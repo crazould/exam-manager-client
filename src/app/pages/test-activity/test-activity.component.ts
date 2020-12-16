@@ -35,7 +35,7 @@ export class TestActivityComponent implements OnInit {
   options: QuestionOption[] = [];
   filteredOptions: QuestionOption[] = [];
 
-  answers: UserAnswer[] = [];
+  multipleAnswers: UserAnswer[] = [];
 
   constructor(
     private titleService: Title,
@@ -100,6 +100,7 @@ export class TestActivityComponent implements OnInit {
       this.questions.forEach(q => {
         q.options = this.options.filter( opt => opt.questionID == q.id)
       })
+
       console.log(this.questions)
     });
   }
@@ -113,6 +114,56 @@ export class TestActivityComponent implements OnInit {
     this.selectedHeader = header;
     this.filteredQuestions = this.questions.filter(q => q.scheduleID == header.id)
     // console.log(this.filteredQuestions)
+  }
+
+  setMultipleAnswer(value: any, questionID: number): void{
+    this.multipleAnswers.push( new UserAnswer(this.participantID, questionID, value))
+  }
+
+  endExam(): void{
+    this.examMode = false;
+
+    switch(this.selectedHeader.testType){
+      case "multiple":
+
+          console.log(this.multipleAnswers)
+
+          let score;
+          let totalRight = 0;
+          let selectedMultipleQuestion = this.questions.filter(q => q.scheduleID == this.selectedHeader.id )
+
+
+          selectedMultipleQuestion.forEach( q => {
+            let participantAnswer = this.multipleAnswers.find(a => a.questionID == q.id)
+            if(q.rightAnswer == participantAnswer.answer) totalRight++;
+          })
+          console.log(totalRight)
+          console.log(selectedMultipleQuestion.length)
+          score = (totalRight / selectedMultipleQuestion.length) * 100;
+          console.log(score)
+
+          this.multipleAnswers = []
+
+        break;
+      case "true false":
+
+        break;
+      case "choose":
+
+        break;
+      case "essay":
+
+        break;
+      case "file":
+
+        break;
+    }
+
+
+  }
+
+  calculateScore(): void{
+
   }
 
 }

@@ -68,8 +68,13 @@
             <div class="my-2" *ngFor="let q of filteredQuestions; index as i">
                 
                 <div>{{ i + 1 }}. {{q.questionName}}</div>
+
                 <div class="form-check row ml-3" *ngFor="let opt of q.options">
-                    <input type="radio" [value]="opt.optionName" class="form-check-input">
+                    <input 
+                        type="radio" 
+                        [value]="opt.optionName" 
+                        class="form-check-input" 
+                        (input)="setMultipleAnswer($event.target.value, opt.questionID)">
                     <label for="">{{opt.optionName}}</label>
                 </div>
 
@@ -78,7 +83,7 @@
             <hr>
 
             <div class="form-group">
-                <button class="btn btn-primary" (click)="examMode = false">
+                <button class="btn btn-primary" (click)="endExam()">
                     End Test
                 </button>
             </div>
