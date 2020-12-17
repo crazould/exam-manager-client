@@ -4,7 +4,14 @@
         <div class="card-header">
             <h2>My Exam Schedules</h2>
         </div>
-        <div class="card-body">
+
+        <div class="card-body d-flex justify-content-center" *ngIf="isLoad">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <div class="card-body" *ngIf="!isLoad">
             <div class="alert alert-info" *ngIf="filteredHeaders.length == 0">
                 you don't have any exam schedule
             </div>
@@ -37,22 +44,29 @@
     <div class="card" *ngIf="selectedHeader!=undefined && examMode == false">
 
         <div class="card-header">
-            {{selectedHeader.testName}}
+            <h4>
+                {{selectedHeader.testName}}
+            </h4>
         </div>
         <div class="card-body">
 
             <div class="lead">
                 Test Type: {{selectedHeader.testType}}<br>
+                Status: {{ selectedDetail.answerStatus }} <br>
                 Start : {{selectedHeader.startTime}} <br>
                 End : {{selectedHeader.endTime}}
             </div>
 
             <hr>
 
-            <div class="form-group">
+            <div class="form-group" *ngIf="selectedDetail.answerStatus == 'no file' ">
                 <button class="btn btn-primary" (click)="examMode = true">
                     Start Test
                 </button>
+            </div>
+
+            <div class="lead" *ngIf="selectedDetail.answerStatus != 'no file'">
+                Score: {{selectedDetail.score}}
             </div>
 
         </div>
@@ -61,33 +75,94 @@
 
     <div class="card" *ngIf="selectedHeader!=undefined && examMode == true">
         <div class="card-header">
-            {{selectedHeader.testName}}
+            <h4>
+                {{selectedHeader.testName}}
+            </h4>
         </div>
+
         <div class="card-body">
 
             <div class="my-2" *ngFor="let q of filteredQuestions; index as i">
-                
-                <div>{{ i + 1 }}. {{q.questionName}}</div>
 
-                <div class="form-check row ml-3" *ngFor="let opt of q.options">
-                    <input 
-                        type="radio" 
-                        [value]="opt.optionName" 
-                        class="form-check-input" 
-                        (input)="setMultipleAnswer($event.target.value, opt.questionID)">
-                    <label for="">{{opt.optionName}}</label>
+                <div class="mb-1">
+                    {{ i + 1 }}. {{q.questionName}}
+                </div>
+                
+                <div *ngIf="selectedHeader.testType == 'multiple'">
+                    <div class="form-check row ml-3" *ngFor="let opt of q.options" >
+                        <input 
+                            type="radio" 
+                            [value]="opt.optionName" 
+                            [name]="opt.questionID"
+                            class="form-check-input" 
+                            (input)="setMultipleAnswer($event.target.value, opt.questionID)">
+                        <label for="">{{opt.optionName}}</label>
+                    </div>
+                </div>
+
+                <div *ngIf="selectedHeader.testType == 'true false'">
+                    <div class="form-check row ml-3">
+                        <input 
+                            type="radio" 
+                            value="true" 
+                            [name]="q.id"
+                            class="form-check-input" 
+                            (input)="setTrueFalseAnswer($event.target.value, q.id)">
+                        <label for="">True</label>
+                    </div>
+                    <div class="form-check row ml-3">
+                        <input 
+                            type="radio" 
+                            value="false" 
+                            [name]="q.id"
+                            class="form-check-input" 
+                            (input)="setTrueFalseAnswer($event.target.value, q.id)">
+                        <label for="">False</label>
+                    </div>
+
+                </div>
+
+                <div *ngIf="selectedHeader.testType == 'choose'" >
+                    <select class="custom-select mt-2 mb-4"
+                        (input)="setChooseAnswer($event.target.value, q.id)">
+                        <option
+                            *ngFor="let opt of q.options"
+                            [value]="opt.optionName">
+                            {{opt.optionName}}
+                        </option>
+                    </select>
+                </div>
+
+                <div *ngIf="selectedHeader.testType == 'essay'" class="mt-3">
+                    <textarea 
+                        class="form-control"
+                        rows="3" 
+                        (input)="setEssayAnswer($event.target.value, q.id)"></textarea>
+                </div>
+
+                <div *ngIf="selectedHeader.testType == 'file'" class="mt-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                      </div>
                 </div>
 
             </div>
 
             <hr>
 
-            <div class="form-group">
+            <div class="form-group"*ngIf="selectedHeader.testType != 'file'" >
                 <button class="btn btn-primary" (click)="endExam()">
-                    End Test
+                    Submit Answer
                 </button>
             </div>
 
+            <div class="form-group" *ngIf="selectedHeader.testType == 'file'" >
+                <button class="btn btn-primary">
+                    Submit File
+                </button>
+            </div>
+            
         </div>
     </div>
 

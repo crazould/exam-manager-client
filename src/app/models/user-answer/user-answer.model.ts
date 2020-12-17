@@ -8,5 +8,7 @@ export class UserAnswer {
         this.questionID = questionID;
         this.answer = answer;
     }
+
+
 }
 

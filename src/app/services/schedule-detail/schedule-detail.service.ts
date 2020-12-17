@@ -29,8 +29,13 @@ export class ScheduleDetailService {
     );
   }
 
-  updateSchedule(){
-    
+  updateSchedule(detail: ScheduleDetail): Observable<ScheduleDetail> {
+    let url = `${this.schedulDetailUrl}/${detail.userID}`
+    return this.http.put<ScheduleDetail>(
+      url,
+      detail,
+      this.httpOptions
+    )
   }
 
 }
