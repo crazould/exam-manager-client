@@ -15,9 +15,9 @@ import { TestStatusComponent } from './pages/test-status/test-status.component';
 import { TestActivityComponent } from './pages/test-activity/test-activity.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { AngularFileUploaderModule } from "angular-file-uploader";
 import { HomeComponent } from './pages/home/home.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { HomeComponent } from './pages/home/home.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFileUploaderModule
+    AngularFileUploaderModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     Title
