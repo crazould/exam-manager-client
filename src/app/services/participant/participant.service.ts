@@ -22,6 +22,12 @@ export class ParticipantService {
     return this.http.get<Participant[]>(this.participantsUrl);
   }
 
+  login(email, password): Observable<Participant> {
+    let object = {email: email, password: password}
+    let url = this.participantsUrl + '/login'
+    return this.http.post<Participant>(url, object, this.httpOptions);
+  }
+
   addParticipant(participant: Participant): Observable<Participant> {
     return this.http.post<Participant>(
       this.participantsUrl,

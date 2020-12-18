@@ -15,6 +15,7 @@ export class UserAnswerService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
+  
   constructor(private http: HttpClient) { }
 
   getAnswers(): Observable<UserAnswer[]>{
@@ -41,6 +42,20 @@ export class UserAnswerService {
       object,
       this.httpOptions
     );
+  }
+
+  submitFileAnswer(userAnswer: UserAnswer, formData : FormData): Observable<any> {
+
+    let object = {
+        userAnswer: userAnswer,
+        formData: formData
+    }
+    // console.log(object)
+
+    let url = `${this.userAnswerUrl}-file`
+
+    return this.http.post<any>(url, object);
+    
   }
 
   updateUserAnswer(id: number, UserAnswer: UserAnswer): Observable<UserAnswer> {

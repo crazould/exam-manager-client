@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Participant } from 'src/app/models/participant/participant.model';
 import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.model';
 import { ScheduleHeader } from 'src/app/models/schedule-header/schedule-header.model';
@@ -14,6 +15,7 @@ import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule
 })
 export class TestStatusComponent implements OnInit {
 
+  currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
 
   scheduleHeaders: ScheduleHeader[] = [];
   selectedHeader: ScheduleHeader;
@@ -29,12 +31,17 @@ export class TestStatusComponent implements OnInit {
     private titleService: Title,
     private scheduleHeaderService: ScheduleHeaderService,
     private scheduleDetailService: ScheduleDetailService,
-    private participantService: ParticipantService
+    private participantService: ParticipantService,
+    private router: Router
   ) {
     this.setTitle("Test Status")
   }
 
   ngOnInit(): void {
+    if(this.currPart == null) {
+      this.router.navigate(['/']);
+      return
+    }
     this.getSchedules();
   }
 
@@ -46,7 +53,6 @@ export class TestStatusComponent implements OnInit {
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
         this.scheduleHeaders = scheduleHeaders;
         this.getDetails()
-        // console.log(this.scheduleHeaders)
     });
   }
 

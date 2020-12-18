@@ -14,6 +14,10 @@ import { TestResultComponent } from './pages/test-result/test-result.component';
 import { TestStatusComponent } from './pages/test-status/test-status.component';
 import { TestActivityComponent } from './pages/test-activity/test-activity.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AngularFileUploaderModule } from "angular-file-uploader";
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +31,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     TestResultComponent,
     TestStatusComponent,
     TestActivityComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularFileUploaderModule
   ],
   providers: [
     Title

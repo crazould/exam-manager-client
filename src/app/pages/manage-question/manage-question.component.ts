@@ -6,6 +6,7 @@ import { QuestionService } from 'src/app/services/question/question.service';
 import { QuestionOptionService } from 'src/app/services/question-option/question-option.service';
 import { Question } from 'src/app/models/question/question.model'
 import { QuestionOption } from 'src/app/models/question-option/question-option.model'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { QuestionOption } from 'src/app/models/question-option/question-option.m
 })
 export class ManageQuestionComponent implements OnInit {
 
+  currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
 
   scheduleHeaders: ScheduleHeader[] = [];
   questions: Question[] = [];
@@ -39,12 +41,17 @@ export class ManageQuestionComponent implements OnInit {
     private titleService: Title,
     private scheduleHeaderService: ScheduleHeaderService,
     private questionService: QuestionService,
-    private questionOptionService: QuestionOptionService
+    private questionOptionService: QuestionOptionService,
+    private router: Router
   ) { 
     this.setTitle("Manage Question")
   }
 
   ngOnInit(): void {
+    if(this.currPart == null) {
+      this.router.navigate(['/']);
+      return
+    }
     this.getSchedules();
     this.newQuestion = new Question("", "");
   }

@@ -10,17 +10,21 @@ import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule
 import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule-header.service';
 import { QuestionOptionService } from 'src/app/services/question-option/question-option.service';
 import { UserAnswerService } from 'src/app/services/user-answer/user-answer.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-activity',
   templateUrl: './test-activity.component.html',
   styleUrls: ['./test-activity.component.sass']
 })
-export class TestActivityComponent implements OnInit {
 
+export class TestActivityComponent implements OnInit {
+  
+  currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
   isLoad: boolean = true;
 
-  participantID: number = 3;
+  participantID: number;
   examMode: boolean = false;
   
   scheduleHeaders: ScheduleHeader[] = [];
@@ -39,12 +43,19 @@ export class TestActivityComponent implements OnInit {
   filteredOptions: QuestionOption[] = [];
 
   multipleAnswers: UserAnswer[] = [];
-
   trueFalseAnswers: UserAnswer[] = [];
-
   chooseAnswers: UserAnswer[] = [];
-
   essayAnswers: UserAnswer[] = [];
+
+  fileAnswer: UserAnswer = new UserAnswer("", "", "");
+
+  afuConfig = {
+    multiple: false,
+    uploadAPI: {
+        url:`http://localhost:8000/api/user-answer-file/${this.fileAnswer.userID}/${this.fileAnswer.questionID}`,
+        method: "POST"
+      }
+  };
 
   constructor(
     private titleService: Title,
@@ -52,12 +63,19 @@ export class TestActivityComponent implements OnInit {
     private scheduleDetailService: ScheduleDetailService,
     private questionService: QuestionService,
     private optionService: QuestionOptionService,
-    private userAnswerService: UserAnswerService
+    private userAnswerService: UserAnswerService,
+    private router: Router
   ) { 
     this.setTitle("Test Activity")
   }
 
   ngOnInit(): void {
+
+    if(this.currPart == null) {
+      this.router.navigate(['/']);
+      return
+    }
+
     this.getSchedules();
   }
 
@@ -67,6 +85,7 @@ export class TestActivityComponent implements OnInit {
 
   getSchedules(): void {
     this.isLoad = true;
+    this.participantID = this.currPart.id
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
       this.scheduleHeaders = scheduleHeaders;
       this.getDetails()
@@ -147,7 +166,6 @@ export class TestActivityComponent implements OnInit {
 
   setTrueFalseAnswer(value: any, questionID: number): void{
 
-
     let check = this.trueFalseAnswers.find(a => a.questionID == questionID)
 
     if(check != undefined){
@@ -186,6 +204,33 @@ export class TestActivityComponent implements OnInit {
     }
 
     this.essayAnswers.push( new UserAnswer(this.participantID, questionID, value))
+  }
+
+  setFileAnswer(questionID: number): void {
+    this.fileAnswer = new UserAnswer(this.participantID, questionID, "");
+    this.afuConfig = {
+      multiple: false,
+      uploadAPI: {
+          url:`http://localhost:8000/api/user-answer-file/${this.participantID}/${questionID}`,
+          method: "POST"
+        }
+    };
+    console.log(this.fileAnswer)
+  }
+
+  setDetailFileAnswer(event: any, questionID: number): void {
+
+    // console.log(event)
+
+    let updateDetail = this.selectedDetail
+    updateDetail.answerStatus = "not yet graded"
+    this.fileAnswer = new UserAnswer(this.participantID, questionID, "");
+
+    this.scheduleDetailService.
+      updateSchedule(updateDetail).subscribe( () => {
+        window.location.reload()
+    })
+    
   }
 
   endExam(): void{
@@ -279,7 +324,6 @@ export class TestActivityComponent implements OnInit {
 
         break;
       case "essay":
-
         // console.log(this.essayAnswers)
 
         if(this.essayAnswers == undefined){
@@ -295,18 +339,8 @@ export class TestActivityComponent implements OnInit {
             window.location.reload()
           })
         })
-
-
-        break;
-      case "file":
-
         break;
     }
-
-
-  }
-
-  calculateScore(): void{
 
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { Participant } from '../../models/participant/participant.model';
 import { ParticipantService } from '../../services/participant/participant.service';
 
@@ -10,18 +11,26 @@ import { ParticipantService } from '../../services/participant/participant.servi
 })
 export class ManageParticipantComponent implements OnInit {
   
+  currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
+
+
   participants: Participant[] = [];
   editParticipantName: string;
   editParticipantEmail: string;
 
   constructor(
     private titleService: Title,
-    private participantService: ParticipantService
+    private participantService: ParticipantService,
+    private router: Router
   ) {
     this.setTitle("Manage Participant");
   }
 
   ngOnInit(): void {
+    if(this.currPart == null) {
+      this.router.navigate(['/']);
+      return
+    }
     this.getParticipants();
   }
   

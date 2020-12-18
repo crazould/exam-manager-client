@@ -8,6 +8,7 @@ import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule
 import { Participant } from 'src/app/models/participant/participant.model';
 import { ScheduleHeader } from 'src/app/models/schedule-header/schedule-header.model';
 import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { ScheduleDetail } from 'src/app/models/schedule-Detail/schedule-Detail.m
   styleUrls: ['./manage-schedule.component.sass'],
 })
 export class ManageScheduleComponent implements OnInit {
+
+  currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
 
   participants: Participant[] = [];
   newTestType: string;
@@ -34,12 +37,18 @@ export class ManageScheduleComponent implements OnInit {
     private titleService: Title,
     private participantService: ParticipantService,
     private scheduleHeaderService: ScheduleHeaderService,
-    private scheduleDetailService: ScheduleDetailService
+    private scheduleDetailService: ScheduleDetailService,
+    private router: Router
   ) {
     this.setTitle('Manage Schedule');
   }
 
   ngOnInit(): void {
+    if(this.currPart == null) {
+      this.router.navigate(['/']);
+      return
+    }
+
     this.getParticipants();
     this.getSchedules();
   }

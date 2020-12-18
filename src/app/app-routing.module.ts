@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { ManageParticipantComponent } from './pages/manage-participant/manage-participant.component';
 import { ManageQuestionComponent } from './pages/manage-question/manage-question.component';
 import { ManageScheduleComponent } from './pages/manage-schedule/manage-schedule.component';
@@ -7,6 +7,7 @@ import { TestActivityComponent } from './pages/test-activity/test-activity.compo
 import { TestResultComponent } from './pages/test-result/test-result.component'
 import { TestStatusComponent } from './pages/test-status/test-status.component'
 import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: 'manage-participant', component: ManageParticipantComponent },
@@ -16,10 +17,14 @@ const routes: Routes = [
   { path: 'test-result', component: TestResultComponent },
   { path: 'test-status', component: TestStatusComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+  constructor(){}
+}
+

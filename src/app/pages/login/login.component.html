@@ -4,11 +4,12 @@
             <h2>Login</h2>
         </div>
         <div class="card-body">
+
             <div class="form-group">
                 <label for="userEmail">
                     Email
                 </label>
-                <input class="form-control" #userEmail type="email" placeholder="ex: john@gmail.com" required>
+                <input class="form-control" #userEmail type="email" placeholder="ex: robert@gmail.com" required>
             </div>
             
             <div class="form-group">
@@ -18,11 +19,17 @@
                 <input class="form-control" #userPassword type="password" required>
             </div>
             
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" (click)="login(userEmail.value, userPassword.value)">
                 Login
             </button>
+
+            <div class="alert alert-warning mt-3" *ngIf="isError == true">
+                Email and password combination is wrong!
+            </div>
+
         </div>
     </div>
+
 </div>
 
 

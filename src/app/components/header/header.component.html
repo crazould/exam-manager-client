@@ -1,35 +1,44 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
     <a class="navbar-brand" href="#">Exam Manager</a>
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
+        
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 1'>
           <a class="nav-link" routerLink="/manage-participant" routerLinkActive="active">Manage Participant</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 1'>
           <a class="nav-link" routerLink="/manage-question" routerLinkActive="active">Manage Question</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 1'>
           <a class="nav-link" routerLink="/manage-schedule" routerLinkActive="active">Manage Schedule</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/test-activity" routerLinkActive="active">Take Test</a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 1'>
           <a class="nav-link" routerLink="/test-result" routerLinkActive="active">View Test Result</a>
         </li>
-        <li class="nav-item">
+        
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 1'>
           <a class="nav-link" routerLink="/test-status" routerLinkActive="active">View Test Status</a>
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item" *ngIf='currPart!= null && currPart.isAdmin == 0'>
+          <a class="nav-link" routerLink="/test-activity" routerLinkActive="active">Take Test</a>
+        </li>
+        
+
+        <li class="nav-item" *ngIf='currPart != null'>
+          <a class="nav-link" (click)="logout()" >Logout</a>
+        </li>
+
+        <li class="nav-item" *ngIf='currPart == null'>
           <a class="nav-link" routerLink="/login" routerLinkActive='active'>Login</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="button" routerLink="/login" routerLinkActive='active-button'>Logout</a>
-        </li> -->
+
+
       </ul>
     </div>
 
