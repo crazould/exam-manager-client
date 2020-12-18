@@ -8,7 +8,6 @@ import { Question } from 'src/app/models/question/question.model'
 import { QuestionOption } from 'src/app/models/question-option/question-option.model'
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-manage-question',
   templateUrl: './manage-question.component.html',
@@ -17,6 +16,7 @@ import { Router } from '@angular/router';
 export class ManageQuestionComponent implements OnInit {
 
   currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
+  isLoad: boolean = true;
 
   scheduleHeaders: ScheduleHeader[] = [];
   questions: Question[] = [];
@@ -74,6 +74,7 @@ export class ManageQuestionComponent implements OnInit {
       if(this.scheduleHeaders.length != 0){
         this.selectScheduleHeader(this.scheduleHeaders[0]);
       }
+      this.isLoad = false;
     })
   }
 

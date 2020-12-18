@@ -12,6 +12,7 @@ import { ParticipantService } from '../../services/participant/participant.servi
 export class ManageParticipantComponent implements OnInit {
   
   currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
+  isLoad: boolean = true;
 
 
   participants: Participant[] = [];
@@ -41,6 +42,7 @@ export class ManageParticipantComponent implements OnInit {
   getParticipants(): void {
     this.participantService.getParticipants().subscribe((participants) => {
       this.participants = participants;
+      this.isLoad = false
     });
   }
 

@@ -16,6 +16,7 @@ import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule
 export class TestStatusComponent implements OnInit {
 
   currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
+  isLoad: boolean = true;
 
   scheduleHeaders: ScheduleHeader[] = [];
   selectedHeader: ScheduleHeader;
@@ -66,7 +67,7 @@ export class TestStatusComponent implements OnInit {
   getParticipants(): void{
     this.participantService.getParticipants().subscribe((p) => {
       this.participants = p;
-      this.selectScheduleHeader(this.scheduleHeaders[0])
+      this.isLoad = false
     })
   }
 

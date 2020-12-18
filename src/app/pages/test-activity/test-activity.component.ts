@@ -10,7 +10,6 @@ import { ScheduleDetailService } from 'src/app/services/schedule-detail/schedule
 import { ScheduleHeaderService } from 'src/app/services/schedule-header/schedule-header.service';
 import { QuestionOptionService } from 'src/app/services/question-option/question-option.service';
 import { UserAnswerService } from 'src/app/services/user-answer/user-answer.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({

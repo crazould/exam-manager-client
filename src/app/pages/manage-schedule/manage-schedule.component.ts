@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 export class ManageScheduleComponent implements OnInit {
 
   currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
+  isLoad: boolean = true;
 
   participants: Participant[] = [];
   newTestType: string;
@@ -50,22 +51,21 @@ export class ManageScheduleComponent implements OnInit {
     }
 
     this.getParticipants();
-    this.getSchedules();
   }
-
+  
   setTitle(pageTitle: string): void {
     this.titleService.setTitle(pageTitle);
   }
-
+  
   getParticipants(): void {
     this.participantService.getParticipants().subscribe((participants) => {
       this.participants = participants;
+      this.getSchedules();
     });
   }
 
   getSchedules(): void {
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
-
       this.scheduleDetailService.getScheduleDetails().subscribe((scheduleDetails) =>{
         this.scheduleHeaders = scheduleHeaders;
         this.scheduleDetails = scheduleDetails;
@@ -75,6 +75,7 @@ export class ManageScheduleComponent implements OnInit {
         })
         // console.log(this.scheduleHeaders)
         // console.log(this.scheduleDetails)
+        this.isLoad = false;
       })
     });
   }
