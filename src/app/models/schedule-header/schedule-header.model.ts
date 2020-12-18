@@ -6,6 +6,7 @@ export class ScheduleHeader {
     startTime: string;
     endTime: string;
     totalParticipants: number;
+    isForbiden: boolean = false;
 
     constructor(
       testName: string,

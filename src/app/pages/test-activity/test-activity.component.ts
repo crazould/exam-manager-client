@@ -24,8 +24,11 @@ export class TestActivityComponent implements OnInit {
   currPart: any = JSON.parse(localStorage.getItem('CURR_PART'))
   isLoad: boolean = true;
 
+  currDate: Date = new Date();
+
   participantID: number;
   examMode: boolean = false;
+  isForbidens: boolean[] = [];
   
   scheduleHeaders: ScheduleHeader[] = [];
   selectedHeader: ScheduleHeader;
@@ -77,6 +80,29 @@ export class TestActivityComponent implements OnInit {
     }
 
     this.getSchedules();
+
+    setInterval(() => {
+      this.currDate = new Date()
+      this.filteredHeaders.map(scheduleHeader => {
+        let startTime: Date = new Date(new Date(scheduleHeader.startTime))
+        let endTime: Date = new Date(new Date(scheduleHeader.endTime))
+
+        console.log( "start " + startTime.getTime())
+        console.log( "end " + endTime.getTime())
+        console.log( "curr " + this.currDate.getTime())
+
+        if( startTime.getTime() < this.currDate.getTime() &&
+            this.currDate.getTime() < endTime.getTime()  ){
+              scheduleHeader.isForbiden = false;
+        }
+        else{
+          scheduleHeader.isForbiden = true;
+        }
+
+      })
+      // console.log(this.filteredHeaders)
+
+    }, 1000)
   }
 
   setTitle(pageTitle: string): void {
@@ -88,6 +114,11 @@ export class TestActivityComponent implements OnInit {
     this.participantID = this.currPart.id
     this.scheduleHeaderService.getScheduleHeaders().subscribe((scheduleHeaders) => {
       this.scheduleHeaders = scheduleHeaders;
+      this.scheduleHeaders.map(scheduleHeader => {
+        scheduleHeader.startTime = new Date(new Date(scheduleHeader.startTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+        scheduleHeader.endTime = new Date(new Date(scheduleHeader.endTime).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]
+      })
+
       this.getDetails()
         // console.log(this.scheduleHeaders)
     });
@@ -122,16 +153,27 @@ export class TestActivityComponent implements OnInit {
         })
       })
 
+      this.filteredHeaders.map(scheduleHeader => {
+        if( new Date(new Date(scheduleHeader.startTime)).getTime < this.currDate.getTime ||
+            this.currDate.getTime < new Date(new Date(scheduleHeader.endTime)).getTime  ){
+              scheduleHeader.isForbiden = false;
+        }
+        else{
+          scheduleHeader.isForbiden = true;
+        }
+      })
+
+      let fhs = this.filteredHeaders.map(fh => {
+       
+      })
+
       // console.log(this.filteredHeaders)
 
       this.questions.forEach(q => {
         q.options = this.options.filter( opt => opt.questionID == q.id)
       })
 
-      this.selectScheduleHeader(this.scheduleHeaders[0])
       this.isLoad = false;
-
-      // console.log(this.questions)
 
     });
   }

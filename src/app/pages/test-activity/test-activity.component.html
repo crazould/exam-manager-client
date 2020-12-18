@@ -3,6 +3,12 @@
     <div class="card">
         <div class="card-header">
             <h2>My Exam Schedules</h2>
+            <div class="lead">
+                <strong>
+                    Date: {{currDate.getDay()}}/{{currDate.getMonth()}}/{{currDate.getFullYear()}} <br>
+                    Time: {{currDate.getHours()}}:{{currDate.getMinutes()}}:{{currDate.getSeconds()}}
+                </strong>
+            </div>
         </div>
 
         <div class="card-body d-flex justify-content-center" *ngIf="isLoad">
@@ -34,6 +40,7 @@
                     </tr>
                 </tbody>
             </table>
+
             <div *ngIf="selectedHeader==undefined && filteredHeaders.length != 0">
                 <p class="alert alert-warning">Please select a schedule!</p>
             </div>
@@ -42,7 +49,6 @@
     </div>
 
     <div class="card" *ngIf="selectedHeader!=undefined && examMode == false">
-
         <div class="card-header">
             <h4>
                 {{selectedHeader.testName}}
@@ -59,7 +65,11 @@
 
             <hr>
 
-            <div class="form-group" *ngIf="selectedDetail.answerStatus == 'no file' ">
+            <div class="alert alert-info" *ngIf="selectedHeader.isForbiden == true">
+                You can't take this exam right now
+            </div>
+
+            <div class="form-group" *ngIf="selectedDetail.answerStatus == 'no file' && selectedHeader.isForbiden != true">
                 <button class="btn btn-primary" (click)="examMode = true">
                     Start Test
                 </button>
