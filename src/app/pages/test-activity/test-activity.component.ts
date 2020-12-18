@@ -86,9 +86,9 @@ export class TestActivityComponent implements OnInit {
         let startTime: Date = new Date(new Date(scheduleHeader.startTime))
         let endTime: Date = new Date(new Date(scheduleHeader.endTime))
 
-        console.log( "start " + startTime.getTime())
-        console.log( "end " + endTime.getTime())
-        console.log( "curr " + this.currDate.getTime())
+        // console.log( "start " + startTime.getTime())
+        // console.log( "end " + endTime.getTime())
+        // console.log( "curr " + this.currDate.getTime())
 
         if( startTime.getTime() < this.currDate.getTime() &&
             this.currDate.getTime() < endTime.getTime()  ){

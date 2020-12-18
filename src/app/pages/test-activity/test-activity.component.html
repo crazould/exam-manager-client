@@ -98,20 +98,22 @@
                     {{ i + 1 }}. {{q.questionName}}
                 </div>
                 
-                <div *ngIf="selectedHeader.testType == 'multiple'">
-                    <div class="form-check row ml-3" *ngFor="let opt of q.options" >
-                        <input 
-                            type="radio" 
-                            [value]="opt.optionName" 
-                            [name]="opt.questionID"
-                            class="form-check-input" 
-                            (input)="setMultipleAnswer($event.target.value, opt.questionID)">
-                        <label for="">{{opt.optionName}}</label>
+                <div class="ml-3" *ngIf="selectedHeader.testType == 'multiple'">
+                    <div *ngFor="let opt of q.options" >
+                        <div class="form-check-inline">
+                            <input 
+                                type="radio" 
+                                [value]="opt.optionName" 
+                                [name]="opt.questionID"
+                                class="form-check-input"
+                                (input)="setMultipleAnswer($event.target.value, opt.questionID)">
+                            <label for="" class="form-check-label">{{opt.optionName}}</label>
+                        </div>
                     </div>
                 </div>
 
-                <div *ngIf="selectedHeader.testType == 'true false'">
-                    <div class="form-check row ml-3">
+                <div class="ml-3" *ngIf="selectedHeader.testType == 'true false'">
+                    <div class="form-check-inline">
                         <input 
                             type="radio" 
                             value="true" 
@@ -120,7 +122,7 @@
                             (input)="setTrueFalseAnswer($event.target.value, q.id)">
                         <label for="">True</label>
                     </div>
-                    <div class="form-check row ml-3">
+                    <div class="form-check-inline">
                         <input 
                             type="radio" 
                             value="false" 
